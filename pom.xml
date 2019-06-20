@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.xenei</groupId>
+  <artifactId>cpe4jena</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>CPE For Jena</name>
+  <description>Classes to handle CPE objects in Jena RDF</description>
+   <properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+	
+  <dependencies>
+  	<dependency>
+  		<groupId>us.springett</groupId>
+  		<artifactId>cpe-parser</artifactId>
+  		<version>2.0.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.jena</groupId>
+  		<artifactId>apache-jena-libs</artifactId>
+  		<version>3.12.0</version>
+  		<type>pom</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.12</version>
+  	</dependency>
+  </dependencies>
+</project>
