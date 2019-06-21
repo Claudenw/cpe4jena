@@ -24,31 +24,29 @@ import org.apache.jena.graph.impl.AdhocDatatype;
 import org.apache.jena.graph.impl.LiteralLabel;
 import org.slf4j.LoggerFactory;
 
-import us.springett.parsers.cpe.Cpe;
-import us.springett.parsers.cpe.CpeParser;
-import us.springett.parsers.cpe.exceptions.CpeParsingException;
+import us.springett.parsers.cpe.values.Part;
 
 
-public class CPEDatatype extends AdhocDatatype {
+public class PartDatatype extends AdhocDatatype {
 	
-	public static final String URI = "java:" + Cpe.class.getName();
-    public static final RDFDatatype cpeDatatype = new CPEDatatype();
+	public static final String URI = "java:" + Part.class.getName();
+    public static final RDFDatatype partDatatype = new PartDatatype();
 
 
     /* register this data type */
     static
     {
-        LoggerFactory.getLogger( CPEDatatype.class ).debug( "Registering " + CPEDatatype.class
+        LoggerFactory.getLogger( PartDatatype.class ).debug( "Registering " + PartDatatype.class
                 .getCanonicalName() );
 
-        TypeMapper.getInstance().registerDatatype( cpeDatatype );
+        TypeMapper.getInstance().registerDatatype( partDatatype );
     }
 
     /**
      * Constructor.
      */
-    private CPEDatatype() {
-        super( Cpe.class );
+    private PartDatatype() {
+        super( Part.class );
     }
     
     /**
@@ -70,8 +68,8 @@ public class CPEDatatype extends AdhocDatatype {
     @Override
     public Object parse(final String lexicalForm)  throws DatatypeFormatException {
         try {
-			return CpeParser.parse( lexicalForm );
-		} catch (CpeParsingException e) {
+			return Part.valueOf(lexicalForm);
+		} catch (IllegalArgumentException e) {
 			throw new DatatypeFormatException(lexicalForm, this, e.getMessage());
 		}
     }
@@ -81,9 +79,9 @@ public class CPEDatatype extends AdhocDatatype {
      */
     @Override
     public String unparse(final Object value) {
-        if (value instanceof Cpe)
+        if (value instanceof Part)
         {
-        	return ((Cpe)value).toString();
+        	return ((Part)value).toString();
         }
         return super.unparse( value );
     }

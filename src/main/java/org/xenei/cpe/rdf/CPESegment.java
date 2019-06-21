@@ -19,28 +19,37 @@ package org.xenei.cpe.rdf;
 
 import us.springett.parsers.cpe.Cpe;
 
+import org.apache.jena.rdf.model.Property;
+import org.xenei.cpe.rdf.vocabulary.CPE;
+
 public enum CPESegment {
-	part( "the type of entry: application, operating system, or hardware"),
-	vendor( "the vendor of the CPE entry"),
-    product( "the product of the CPE entry"),
-    version( "the version of the CPE entry"),
-    update( "the update of the CPE entry"),
-    edition( "the edition of the CPE entry"),
-    language( "the language of the CPE entry"),
-    swEdition( "the swEdition of the CPE entry"),
-    targetSw( "the targetSw of the CPE entry"),
-    targetHw( "the targetHw of the CPE entry"),
-    other( "the other of the CPE entry");
+	part( "the type of entry: application, operating system, or hardware", CPE.part),
+	vendor( "the vendor of the CPE entry", CPE.vendor),
+    product( "the product of the CPE entry", CPE.product),
+    version( "the version of the CPE entry", CPE.version),
+    update( "the update of the CPE entry", CPE.update),
+    edition( "the edition of the CPE entry", CPE.edition),
+    language( "the language of the CPE entry", CPE.language),
+    swEdition( "the swEdition of the CPE entry", CPE.swEdition),
+    targetSw( "the targetSw of the CPE entry", CPE.targetSw),
+    targetHw( "the targetHw of the CPE entry", CPE.targetHw),
+    other( "the other of the CPE entry", CPE.other);
     
     private String desc;
+    private Property prop;
     
-    CPESegment( String desc )
+    CPESegment( String desc, Property prop )
     {
 		this.desc = desc;
+		this.prop = prop;
     }
 
-    public String getDescription() {
+    public String description() {
     	return desc;
+    }
+    
+    public Property property() {
+    	return prop;
     }
     
     public String extractSegment( Cpe cpe )
