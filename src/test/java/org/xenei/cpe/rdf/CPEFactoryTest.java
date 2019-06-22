@@ -33,7 +33,6 @@ public class CPEFactoryTest {
 	public void getResourceTest() throws CpeParsingException {
 		
 		Resource result = CPEFactory.buildResource(URN);
-		result.getModel().write( System.out, "TURTLE" );
 		for (CPESegment segment : CPESegment.values())
 		{
 			

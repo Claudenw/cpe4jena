@@ -29,8 +29,7 @@ import us.springett.parsers.cpe.exceptions.CpeParsingException;
 public class CPEMatchedByTest {
 	private static final String URN = "cpe:2.3:h:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
 	private static final String URN2 = "cpe:2.3:a:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
-	private static final String URNWild = "cpe:2.3:*:vendor:product:version:update:e\n" + 
-			"import org.apache.jena.graph.Node;dition:language:swEdition:targetSw:targetHw:other";
+	private static final String URNWild = "cpe:2.3:*:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
 	private static CPEMatchedBy cpeMatchedBy = new CPEMatchedBy();
 	
 	public CPEMatchedByTest() throws CpeParsingException {

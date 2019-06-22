@@ -18,17 +18,11 @@
 package org.xenei.cpe.rdf.vocabulary;
 
 
-
 import org.apache.jena.datatypes.RDFDatatype ;
-import org.apache.jena.datatypes.xsd.impl.RDFLangString ;
-import org.apache.jena.datatypes.xsd.impl.RDFhtml ;
-import org.apache.jena.datatypes.xsd.impl.XMLLiteralType ;
-import org.apache.jena.graph.Node ;
 import org.apache.jena.rdf.model.Property ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.rdf.model.ResourceFactory ;
 import org.xenei.cpe.rdf.CPEDatatype;
-import org.xenei.cpe.rdf.CPESegment;
 import org.xenei.cpe.rdf.PartDatatype;
 
 /**
@@ -55,7 +49,6 @@ public class CPE{
         { return ResourceFactory.createProperty( uri, local ); }
 
     public static final Resource CPE = resource( "Cpe" );
-    public static final Resource Part = resource( "Part" );
 
     
     public static final Property part = property( "part");
@@ -74,5 +67,7 @@ public class CPE{
 
     public static final RDFDatatype cpeDatatype = CPEDatatype.cpeDatatype;
     public static final RDFDatatype partDatatype = PartDatatype.partDatatype;
+    
+    
     
 }
