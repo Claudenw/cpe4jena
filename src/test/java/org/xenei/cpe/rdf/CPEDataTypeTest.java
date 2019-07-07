@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.TypeMapper;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Test;
 
 import us.springett.parsers.cpe.Cpe;

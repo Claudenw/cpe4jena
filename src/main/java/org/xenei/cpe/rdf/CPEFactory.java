@@ -25,7 +25,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.DC;
 import org.apache.jena.vocabulary.DC_11;
 import org.apache.jena.vocabulary.RDF;
-import org.xenei.cpe.rdf.vocabulary.CPE;
+import org.xenei.cpe.rdf.vocabulary.XCPE;
 
 import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.CpeParser;
@@ -59,7 +59,7 @@ public class CPEFactory {
 	 */
 	public static Resource buildResource( Cpe cpe ) {
 		Model model = ModelFactory.createDefaultModel();
-		Resource result = model.createResource( cpe.toString(), CPE.CPE );		
+		Resource result = model.createResource( cpe.toString(), XCPE.CPE );		
 		for (CPESegment segment : CPESegment.values())
 		{
 			model.add( segment.property(), DC_11.description,  segment.description() );
@@ -112,7 +112,7 @@ public class CPEFactory {
 			model.add( segment.property(), DC_11.description,  segment.description() );
 			model.add( segment.property(), RDF.type, RDF.Property );
 		}
-		model.add( CPE.CPE, DC.description, "epresentation of a Common Platform Enumeration (CPE)" );
+		model.add( XCPE.CPE, DC.description, "epresentation of a Common Platform Enumeration (CPE)" );
 		return model;
 	}
 	

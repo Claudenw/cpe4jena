@@ -20,20 +20,20 @@ package org.xenei.cpe.rdf;
 import us.springett.parsers.cpe.Cpe;
 
 import org.apache.jena.rdf.model.Property;
-import org.xenei.cpe.rdf.vocabulary.CPE;
+import org.xenei.cpe.rdf.vocabulary.XCPE;
 
 public enum CPESegment {
-	part( "the type of entry: application, operating system, or hardware", CPE.part),
-	vendor( "the vendor of the CPE entry", CPE.vendor),
-    product( "the product of the CPE entry", CPE.product),
-    version( "the version of the CPE entry", CPE.version),
-    update( "the update of the CPE entry", CPE.update),
-    edition( "the edition of the CPE entry", CPE.edition),
-    language( "the language of the CPE entry", CPE.language),
-    swEdition( "the swEdition of the CPE entry", CPE.swEdition),
-    targetSw( "the targetSw of the CPE entry", CPE.targetSw),
-    targetHw( "the targetHw of the CPE entry", CPE.targetHw),
-    other( "the other of the CPE entry", CPE.other);
+	part( "the type of entry: application, operating system, or hardware", XCPE.part),
+	vendor( "the vendor of the CPE entry", XCPE.vendor),
+    product( "the product of the CPE entry", XCPE.product),
+    version( "the version of the CPE entry", XCPE.version),
+    update( "the update of the CPE entry", XCPE.update),
+    edition( "the edition of the CPE entry", XCPE.edition),
+    language( "the language of the CPE entry", XCPE.language),
+    swEdition( "the swEdition of the CPE entry", XCPE.swEdition),
+    targetSw( "the targetSw of the CPE entry", XCPE.targetSw),
+    targetHw( "the targetHw of the CPE entry", XCPE.targetHw),
+    other( "the other of the CPE entry", XCPE.other);
     
     private String desc;
     private Property prop;
