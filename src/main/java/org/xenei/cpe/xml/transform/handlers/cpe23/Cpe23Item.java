@@ -16,9 +16,20 @@ import org.xml.sax.SAXException;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
+/**
+ * Handler for a CPE23 element.
+ *
+ */
 public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 
 	private Resource subject; 
+
+	/**
+	 * Constructor.
+	 * @param item the subject handler this CPE23 item is part of.
+	 * @param attributes the attributes of this item.
+	 * @throws SAXException if the attributes do not contain a name that is of a proper cpe23 format.
+	 */
 	public Cpe23Item(SubjectHandler item, Attributes attributes) throws SAXException {
 		super((CPEHandlerBase)item);
 		String name = attributes.getValue("name");
@@ -32,7 +43,7 @@ public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 		} catch (CpeParsingException e) {
 			throw new SAXException( "Error parsing "+name, e);
 		}
-		addTriple( subject, RDF.type, XCPE.cpe23Type);
+		addTriple( subject, RDF.type, XCPE.Cpe23Type);
 		item.addTriple( CPE23.cpe23Item, subject);
 		addTriple( subject, CPE.cpeItem, item.getSubject());
 	}
@@ -77,15 +88,4 @@ public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 			super.endElement(uri, localName, qName);
 		}
 	}
-	
-
-	/*
-	 * 
-	<cpe-23:cpe23-item name="cpe:2.3:a:3com:tippingpoint_ips:-:*:*:*:*:*:*:*">
-    <cpe-23:deprecation date="2010-12-28T12:35:59.023-05:00">
-      <cpe-23:deprecated-by name="cpe:2.3:h:3com:tippingpoint_ips:-:*:*:*:*:*:*:*" type="NAME_CORRECTION"/>
-    </cpe-23:deprecation>
-  </cpe-23:cpe23-item>
-
-	 */
 }

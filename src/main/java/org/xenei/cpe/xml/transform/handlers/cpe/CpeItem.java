@@ -16,10 +16,20 @@ import org.xml.sax.SAXException;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
+/**
+ * A CpeItem.
+ *
+ */
 public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 
 	private Resource subject;
 
+	/**
+	 * Constructor.
+	 * @param cpeList  The CpeList this is enclosed by
+	 * @param attributes the attributes for this item.
+	 * @throws SAXException on missing attributes.
+	 */
 	public CpeItem(CpeList cpeList, Attributes attributes) throws SAXException {
 		super(cpeList);
 		String name = attributes.getValue("name");
@@ -32,7 +42,7 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 		} catch (CpeParsingException e) {
 			throw new SAXException("Error parsing " + name, e);
 		}
-		addTriple(subject, RDF.type, XCPE.cpeItemType);
+		addTriple(subject, RDF.type, XCPE.CpeType);
 
 		if (attributes.getValue("deprecated") != null) {
 			addTriple(subject, CPE.deprecationDate, attributes.getValue("deprecation_date"));
@@ -70,20 +80,6 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 			push(new GenericElement(this, uri, localName, attributes));
 		}
 
-//			<xsl:template match="cpe-23:deprecation" mode="reference">
-//			   <cpe:deprecation_date><xsl:value-of select="@date"/></cpe:deprecation_date>
-//			   <xsl:apply-templates select="cpe-23:deprecated-by" mode="reference"/>
-//			</xsl:template>
-//			
-//			<xsl:apply-templates select="cpe-23:cpe23-item" mode="reference" />
-//			<xsl:apply-templates />
-//		</rdf:Description>
-//		
-//        <xsl:apply-templates select="cpe-23:cpe23-item" mode="definition" />
-//        <xsl:apply-templates select="cpe:references/cpe:reference" mode="definition" />
-//	</xsl:template>
-//		
-//		throw new SAXException( "Unknown Element "+fqName);
 	}
 
 	@Override

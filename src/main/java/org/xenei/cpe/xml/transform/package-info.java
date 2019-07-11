@@ -1,9 +1,4 @@
-/*
- * Copyright Wipro Ltd., 2018.
- *  Any unauthorized access, use, copy, modification shall lead to infringement of the code
- */
-
 /**
- * Classes for transforming the CPE xml file into Fuseki Consumable file
+ * Classes for loading the CPE XML files into a Jena DataSource.
  */
 package org.xenei.cpe.xml.transform;

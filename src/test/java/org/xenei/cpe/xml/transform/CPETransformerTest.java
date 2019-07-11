@@ -58,11 +58,11 @@ public class CPETransformerTest {
 		CPEHandler handler = new CPEHandler(stream, xmlURL);
 
 		try (InputStream xmlInput = xmlURL.openStream()) {
-			CPETransformer.load(xmlInput, xmlURL.toString(), handler);
+			handler.load(xmlInput, xmlURL.toString());
 		}
 		stream.finish();
 
-		Model model = ds.getDefaultModel();
+		Model model = ds.getNamedModel( xmlURL.toExternalForm() );
 		model.setNsPrefixes(handler.getPrefixMapping());
 
 		model.write(System.out, "TURTLE");
@@ -130,7 +130,7 @@ public class CPETransformerTest {
 		CPEHandler handler = new CPEHandler(stream, xmlURL);
 
 		try (InputStream xmlInput = xmlURL.openStream()) {
-			CPETransformer.load(xmlInput, xmlURL.toString(), handler);
+			handler.load(xmlInput, xmlURL.toString());
 		}
 
 		stream.finish();

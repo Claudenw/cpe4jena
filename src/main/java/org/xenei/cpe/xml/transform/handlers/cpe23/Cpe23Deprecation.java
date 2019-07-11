@@ -6,10 +6,20 @@ import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * Handles the CPE23 deprecation element.
+ *
+ */
 public class Cpe23Deprecation extends CPEHandlerBase {
 	
 	private Cpe23Item item;
 	
+	/**
+	 * Constructor.
+	 * @param item the CPE23 Item this deprecation is associated with. 
+	 * @param attributes the attributes for this element.
+	 * @throws SAXException if the attributes does not contain a date attribute.
+	 */
 	public Cpe23Deprecation( Cpe23Item item, Attributes attributes) throws SAXException
 	{
 		super( item );
@@ -45,8 +55,5 @@ public class Cpe23Deprecation extends CPEHandlerBase {
 			super.endElement(uri, localName, qName);
 		}
 	}
-	
-
-
 
 }

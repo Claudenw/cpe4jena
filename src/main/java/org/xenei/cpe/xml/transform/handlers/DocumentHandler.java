@@ -6,8 +6,16 @@ import org.xenei.cpe.xml.transform.handlers.cpe.CpeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * Class to handle the Start Document event.
+ *
+ */
 public class DocumentHandler extends CPEHandlerBase {
 
+	/**
+	 * Constructor.
+	 * @param cpeHandler the CPE handler that has received the start document event.
+	 */
 	public DocumentHandler(CPEHandler cpeHandler) {
 		super(cpeHandler);
 	}

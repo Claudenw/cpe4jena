@@ -48,9 +48,10 @@ public class XCPE{
     public static final Property property( String local )
         { return ResourceFactory.createProperty( uri, local ); }
 
-    public static final Resource CPE = resource( "Cpe" );
-	public static final Resource cpeItemType = resource( "CpeType");
-	public static final Resource cpe23Type = resource( "Cpe23Type" );
+    public static final Resource CpeGraph = resource( "CpeGraph");
+    public static final Resource Cpe = resource( "Cpe" );
+	public static final Resource CpeType = resource( "CpeType");
+	public static final Resource Cpe23Type = resource( "Cpe23Type" );
 	
 
     

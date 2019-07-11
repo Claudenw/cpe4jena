@@ -6,12 +6,21 @@ import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.SAXException;
 
+/**
+ * Processes a Cpe Note element.
+ *
+ */
 public class CpeNote extends CPEHandlerBase {
 
 	private CpeItem item;
 	private String lang;
 	private StringBuilder sb;
 
+	/**
+	 * Constructor.
+	 * @param item the Item that this not is associated with.
+	 * @param lang the language tag for this note (may not be null, may be an empty string).
+	 */
 	public CpeNote(CpeItem item, String lang) {
 		super(item);
 		this.item = item;

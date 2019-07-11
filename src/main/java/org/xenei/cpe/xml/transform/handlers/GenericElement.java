@@ -6,6 +6,11 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * A generic element in the XML document.  The generic element in the XML document contains text.
+ * This class will capture the text and create a property to add it to the subject handler.
+ * The only attribute processed is the xml:lang attribute.   
+ */
 public class GenericElement extends CPEHandlerBase {
 
 	private Property predicate;
@@ -13,6 +18,16 @@ public class GenericElement extends CPEHandlerBase {
 	private StringBuilder sb;
 	private String lang;
 	
+	/**
+	 * Constructor.
+	 * 
+	 * Only the xml:lang attribute is processed.  All others are ignored.
+	 * 
+	 * @param subject the subject handler to add the property to.
+	 * @param uri the URI for this generic element.
+	 * @param localName the local name for this generic element.
+	 * @param attributes the attributes for this generic element.
+	 */
 	public GenericElement(SubjectHandler subject, String uri, String localName, Attributes attributes) {
 		super( (CPEHandlerBase) subject);
 		this.subject = subject;
@@ -32,8 +47,6 @@ public class GenericElement extends CPEHandlerBase {
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		sb.append( ch, start, length );
 	}
-
-
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {

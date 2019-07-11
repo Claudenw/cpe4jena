@@ -5,11 +5,21 @@ import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * Processes Cpe Notes entries.
+ *
+ */
 public class CpeNotes extends CPEHandlerBase {
 
 	private CpeItem item;
 	private String lang;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param item The CpeItem this notes list is associated with.
+	 * @param attributes the attributes for this notes list.
+	 */
 	public CpeNotes(CpeItem item, Attributes attributes) {
 		super(item);
 		this.item = item;

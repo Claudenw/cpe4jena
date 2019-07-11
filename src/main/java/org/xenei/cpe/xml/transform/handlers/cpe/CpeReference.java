@@ -8,11 +8,21 @@ import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * A CPE Reference processor.
+ *
+ */
 public class CpeReference extends CPEHandlerBase {
 
 	private Resource subject;
 	private StringBuilder sb;
 
+	/**
+	 * Constructor.
+	 * @param item the CPE Item this reference is associated with.
+	 * @param attributes the attributes for this reference.
+	 * @throws SAXException if the reference does not have an "href" attribute.
+	 */
 	public CpeReference(CpeItem item, Attributes attributes) throws SAXException {
 		super(item);
 		String href = attributes.getValue("href");

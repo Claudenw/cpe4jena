@@ -1,14 +1,27 @@
 package org.xenei.cpe.xml.transform.handlers.cpe;
 
+import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE;
+import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * A Cpe list item.
+ *
+ */
 public class CpeList extends CPEHandlerBase {
 
+	/**
+	 * Constructor.
+	 * @param handlerBase the CPEHandlerBase that this list is in.
+	 * @param attributes the attributes for this list.
+	 */
 	public CpeList(CPEHandlerBase handlerBase, Attributes attributes) {
 		super(handlerBase);
+		addQuad( Quad.defaultGraphNodeGenerated, graphName(), RDF.type, XCPE.CpeGraph );
 	}
 
 	@Override
@@ -31,5 +44,4 @@ public class CpeList extends CPEHandlerBase {
 			pop();
 		}
 	}
-
 }

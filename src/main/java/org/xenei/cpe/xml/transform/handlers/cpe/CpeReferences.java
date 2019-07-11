@@ -5,10 +5,18 @@ import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+/**
+ * Handles CPE references entities.
+ *
+ */
 public class CpeReferences extends CPEHandlerBase {
 
 	private CpeItem item;
 
+	/**
+	 * Constructor.
+	 * @param item the CPE Item the references are associated with.
+	 */
 	public CpeReferences(CpeItem item) {
 		super(item);
 		this.item = item;
