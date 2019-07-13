@@ -2,56 +2,59 @@ package org.xenei.cpe.xml.transform.handlers.cpe23;
 
 import java.util.UUID;
 
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
+import org.xenei.cpe.rdf.vocabulary.ChangeType;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
+import org.xenei.cpe.xml.transform.handlers.GenericElement;
 import org.xenei.cpe.xml.transform.handlers.SubjectHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 /**
- * Handles the CPE23 deprecation element.
+ * Handles the CPE23 organization types element.
  *
  */
-public class Cpe23Deprecation extends CPEHandlerBase implements SubjectHandler {
-	
+public class Cpe23ChangeDescription extends CPEHandlerBase implements SubjectHandler {	
 	private final Resource subject;
+
 	
 	/**
 	 * Constructor.
-	 * @param item the CPE23 Item this deprecation is associated with. 
+	 * @param item the CPE23 Item this deprecation is associated with.
 	 * @param attributes the attributes for this element.
 	 * @throws SAXException if the attributes does not contain a date attribute.
 	 */
-	public Cpe23Deprecation( Cpe23Item item, Attributes attributes) throws SAXException
+	public Cpe23ChangeDescription( Cpe23ProvenanceRecord item, Attributes attributes) throws SAXException
 	{
 		super( item );
-		subject = ResourceFactory.createResource( "urn:uuid:"+ UUID.randomUUID().toString());
-		item.addTriple( CPE23.deprecation, subject);
-		addTriple( subject, RDF.type, CPE23.DeprecationType);
-		addRequiredAttribute( subject, attributes, "date", CPE23.date );
-		
+		subject = ResourceFactory.createResource( "urn:uuid:"+UUID.randomUUID().toString() );
+		addTriple( subject, RDF.type, CPE23.ChangeDescriptionType );
+		item.addTriple( CPE23.changeDescription, subject );
+		addRequiredAttribute( subject, ChangeType.class, attributes, "change-type", CPE23.changeType);
+		addOptionalAttribute( subject, attributes, "date", CPE23.date );
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		String fqName = uri+localName;
-			
-		if (fqName.equals( CPE23.deprecatedBy.getURI())) {
-			push( new Cpe23DeprecatedBy( this, attributes ));
+		if (fqName.equals( CPE23.evidenceReference.getURI()))
+		{
+			push( new Cpe23EvidenceReference( this, attributes ));
 		}
 		else {
-			super.startElement(uri, localName, fqName, attributes);
+			// handles comments
+			push( new GenericElement( this, uri, localName, attributes ) );
 		}
-
 	} 
-
+	
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri+localName;
-		if (fqName.equals( CPE23.deprecation.getURI() ))
+		if (fqName.equals( CPE23.provenanceRecord.getURI() ))
 		{
 			pop();
 		} else {

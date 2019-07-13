@@ -1,0 +1,159 @@
+@prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+##
+## Generator Type
+##
+
+cpe:GeneratorType rdf:type rdfs:Class ;
+    rdfs:comment "The Generator defines an element that is used to hold information about when a particular document was compiled" ;
+    rdfs:label "Generator" ;
+    .
+    
+cpe:product_name rdf:type rdf:Property ;
+    rdfs:comment "The optional product_name element specifies the name of the application used to generate the file." ; 
+    rdfs:domain cpe:GeneratorType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Product Name" ;
+    .
+    
+cpe:product_version rdf:type rdf:Property ;
+    rdfs:comment "The optional product_version element specifies the version of the application used to generate the file." ; 
+    rdfs:domain cpe:GeneratorType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Product Version" ;
+    .
+    
+cpe:schema_version rdf:type rdf:Property ;
+    rdfs:comment "The required schema_version element specifies the version of the schema that the document has been written against and that should be used for validation." ; 
+    rdfs:domain cpe:GeneratorType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Schema Version" ;
+    .
+    
+cpe:timestamp rdf:type rdf:Property ;
+    rdfs:comment """The required timestamp element specifies when the particular
+                        document was compiled. The format for the timestamp is yyyy-mm-ddThh:mm:ss. Note that the
+                        timestamp element does not specify when an item in the document was created or modified but
+                        rather when the actual XML document that contains the items was created. For example, a document
+                        might pull a bunch of existing items together, each of which was created at some point in the
+                        past. The timestamp in this case would be when this combined document was
+                        created.""" ;
+    rdfs:domain cpe:GeneratorType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Creaton Date" ;
+    .    
+  
+##
+## Item Type
+##  
+    
+cpe:ItemType rdf:type rdf:Class ;
+    rdfs:comment "The ItemType defines a class that represents a single CPE Name and should follow the URI structure outlined in the CPE Specification." ;
+    rdfs:label "ItemType" .
+
+cpe:cpe-item rdf:type rdf:Property ;
+    rdfs:comment "The cpe-item property points to an ItemType" ;
+    rdfs:domain rdfs:Resource ;
+    rdfs:range cpe:ItemType ;
+    rdfs:label "CPE item" ;
+    .
+
+cpe:title rdf:type rdf:Property ;
+    rdfs:comment "The optional title property is used to provide a human-readable title for the platform." ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Title" ;
+    .
+
+cpe:deprecated rdf:type rdf:Property ;
+    rdfs:comment "A flag that indicates the CPE is deprecated" ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Deprecated" ;
+    .
+
+cpe:note rdf:type rdf:Property ;
+    rdfs:comment "The optional notes property is used to provide a human-readable descriptive material." ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Note" ;
+    .
+
+cpe:reference rdf:type rdf:Property ;
+    rdfs:comment "The optional reference property contains links to external resources." ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range cpe:ReferenceType ;
+    rdfs:label "References" ;
+    .
+
+cpe:check rdf:type rdf:Property ;
+    rdfs:comment "The optional check element is used to call out an OVAL Definition URL that can confirm or reject an IT system as an instance of the named platform." ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range cpe:CheckType ;
+    rdfs:label "Check" ;
+    .
+    
+cpe:name rdf:type rdf:Property ;
+    rdfs:comment "a single CPE Name" ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Name" ;
+    .
+
+cpe:deprecated_by rdf:type rdf:Property ;
+    rdfs:comment "The Item that deprecated this item" ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range cpe:ItemType ;
+    rdfs:label "Deprecated by" ;
+    .
+
+cpe:deprecation_date rdf:type rdf:Property ;
+    rdfs:comment "The data this item was deprecated" ;
+    rdfs:domain cpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Deprecation date" ;
+    .
+
+##
+## Reference Type
+##
+
+cpe:ReferenceType rdf:type rdf:Class ;
+    rdfs:comment "The ReferenceType defines a class that contains references." ;
+    rdfs:label "ReferenceType" ;
+    .
+    
+cpe:reference rdf:type rdf:Property ;
+    rdfs:comment "The optional reference property contains links to external resources." ;
+    rdfs:domain cpe:ReferenceType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Reference Type" ;
+    .
+    
+##
+## Check Type
+##
+
+cpe:CheckType rdf:type rdf:Class ;
+    rdfs:comment "The ReferenceType defines a class that contains references." ;
+    rdfs:label "CheckType" ;
+    .
+
+cpe:system rdf:type rdf:Property ;
+    rdfs:comment "The URI for a particular version of OVAL or a related system testing language." ;
+    rdfs:domain cpe:CheckType ;
+    rdfs:range rdfs:Resource ;
+    rdfs:label "Testing System" ;
+    .
+
+cpe:href rdf:type rdf:Property ;
+    rdfs:comment "An external file reference." ;
+    rdfs:domain cpe:ReferenceType ;
+    rdfs:range rdfs:Resource ;
+    rdfs:label "Content Test Identifier" ;
+    
+    
+    .
+    
+   

@@ -19,6 +19,8 @@ import org.xml.sax.SAXException;
  */
 public class CpeGenerator extends CPEHandlerBase implements SubjectHandler {
 
+	public static final String ELEMENT = CPE.uri+"generator";
+
 	private Resource subject;
 
 	/**
@@ -29,7 +31,8 @@ public class CpeGenerator extends CPEHandlerBase implements SubjectHandler {
 	public CpeGenerator(CpeList list) {
 		super(list);
 		subject = ResourceFactory.createResource(source().toExternalForm());
-		addTriple(subject, RDF.type, CPE.generator);
+		addTriple(subject, RDF.type, CPE.Generator);
+		addQuad( Quad.defaultGraphNodeGenerated, subject, RDF.type, CPE.Generator);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class CpeGenerator extends CPEHandlerBase implements SubjectHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
-		if (CPE.generator.getURI().equals(fqName)) {
+		if (CpeGenerator.ELEMENT.equals(fqName)) {
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

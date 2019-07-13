@@ -19,6 +19,7 @@ package org.xenei.cpe.rdf.vocabulary;
 
 
 import org.apache.jena.datatypes.RDFDatatype ;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property ;
 import org.apache.jena.rdf.model.Resource ;
 import org.apache.jena.rdf.model.ResourceFactory ;
@@ -47,12 +48,14 @@ public class XCPE{
 
     public static final Property property( String local )
         { return ResourceFactory.createProperty( uri, local ); }
+    
+//	public static Model getSchema() {
+//		return model;
+//	}
+
 
     public static final Resource CpeGraph = resource( "CpeGraph");
     public static final Resource Cpe = resource( "Cpe" );
-	public static final Resource CpeType = resource( "CpeType");
-	public static final Resource Cpe23Type = resource( "Cpe23Type" );
-	
 
     
     public static final Property part = property( "part");
@@ -67,9 +70,13 @@ public class XCPE{
     public static final Property targetHw = property( "targetHw" );
     public static final Property other = property( "other" );
 
-    public static final Property deprecatedReason = property( "deprecatedReason");
+    //public static final Property deprecatedReason = property( "deprecatedReason");
     public static final Property deprecates = property( "deprecates");
+    public static final Property name = property( "name" );
     
+    public static final Property referenceURL = property( "referenceURL");
+    public static final Property evidenceURL = property( "evidenceURL" );
+    public static final Property checkText = property( "checkText");
     
     public static final RDFDatatype cpeDatatype = CPEDatatype.cpeDatatype;
     public static final RDFDatatype partDatatype = PartDatatype.partDatatype;

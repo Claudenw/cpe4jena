@@ -5,7 +5,6 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
-import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.handlers.GenericElement;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xenei.cpe.xml.transform.handlers.SubjectHandler;
@@ -13,14 +12,18 @@ import org.xenei.cpe.xml.transform.handlers.cpe23.Cpe23Item;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
+
 
 /**
  * A CpeItem.
  *
  */
 public class CpeItem extends CPEHandlerBase implements SubjectHandler {
+
+	public static final String ELEMENT = CPE.uri+"cpe-item";
 
 	private Resource subject;
 
@@ -34,18 +37,20 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 		super(cpeList);
 		String name = attributes.getValue("name");
 		if (name == null) {
-			throw new SAXException(CPE.cpeItem.getURI() + " must have name attribute");
+			throw new SAXException(CpeItem.ELEMENT + " must have name attribute");
 		}
-		subject = ResourceFactory.createResource(name);
-		try {
-			addTriple(subject, CPE.name, CpeParser.parse(name));
-		} catch (CpeParsingException e) {
-			throw new SAXException("Error parsing " + name, e);
-		}
-		addTriple(subject, RDF.type, XCPE.CpeType);
+			
+		subject = addCPE( name );
+		
+		addTriple(subject, RDF.type, CPE.ItemType);
 
-		if (attributes.getValue("deprecated") != null) {
-			addTriple(subject, CPE.deprecationDate, attributes.getValue("deprecation_date"));
+		addOptionalAttribute( subject, attributes, "deprecated", CPE.deprecated );
+		addOptionalAttribute( subject, attributes, "deprecation_date", CPE.deprecationDate);
+		
+		String deprecatedBy = attributes.getValue( "deprecated_by" );
+		if (deprecatedBy != null)
+		{
+			addTriple( subject, CPE.deprecatedBy, addCPE( deprecatedBy ));
 		}
 	}
 
@@ -68,14 +73,15 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		String fqName = uri + localName;
 
-		if (fqName.equals(CPE.uri + "references")) {
+		if (fqName.equals(CPE.references.getURI())) {
 			push(new CpeReferences(this));
 		}
-
 		else if (fqName.equals(CPE23.cpe23Item.getURI())) {
 			push(new Cpe23Item(this, attributes));
-		} else if (fqName.equals(CPE.uri + "notes")) {
+		} else if (fqName.equals(CPE.uri+"notes")) {
 			push(new CpeNotes(this, attributes));
+		} else if (fqName.equals(CPE.check.getURI())) {
+			push(new CpeCheck(this, attributes));
 		} else {
 			push(new GenericElement(this, uri, localName, attributes));
 		}
@@ -85,7 +91,7 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
-		if (CPE.cpeItem.getURI().equals(fqName)) {
+		if (CpeItem.ELEMENT.equals(fqName)) {
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

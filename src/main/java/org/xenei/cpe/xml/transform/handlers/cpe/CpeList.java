@@ -1,5 +1,6 @@
 package org.xenei.cpe.xml.transform.handlers.cpe;
 
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE;
@@ -13,6 +14,8 @@ import org.xml.sax.SAXException;
  *
  */
 public class CpeList extends CPEHandlerBase {
+	
+	public static final String ELEMENT = CPE.uri+"cpe-list";
 
 	/**
 	 * Constructor.
@@ -28,9 +31,9 @@ public class CpeList extends CPEHandlerBase {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		String fqName = uri + localName;
 
-		if (fqName.equals(CPE.cpeItem.getURI())) {
+		if (fqName.equals(CpeItem.ELEMENT)) {
 			push(new CpeItem(this, attributes));
-		} else if (fqName.equals(CPE.generator.getURI())) {
+		} else if (fqName.equals(CpeGenerator.ELEMENT)) {
 			push(new CpeGenerator(this));
 		} else {
 			super.startElement(uri, localName, fqName, attributes);
@@ -40,7 +43,7 @@ public class CpeList extends CPEHandlerBase {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
-		if (fqName.equals(CPE.cpeList.getURI())) {
+		if (fqName.equals(CpeList.ELEMENT)) {
 			pop();
 		}
 	}

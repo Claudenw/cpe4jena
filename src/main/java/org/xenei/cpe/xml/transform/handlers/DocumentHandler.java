@@ -23,7 +23,7 @@ public class DocumentHandler extends CPEHandlerBase {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		String fqName = uri+localName;
-		if (fqName.equals( CPE.cpeList.getURI()))
+		if (fqName.equals( CpeList.ELEMENT ))
 		{
 			push( new CpeList( this, attributes ));
 		} else {

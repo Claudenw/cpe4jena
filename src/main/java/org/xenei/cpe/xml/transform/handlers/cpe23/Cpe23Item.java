@@ -10,9 +10,11 @@ import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.handlers.GenericElement;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xenei.cpe.xml.transform.handlers.SubjectHandler;
+import org.xenei.cpe.xml.transform.handlers.cpe.CpeItem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
@@ -35,15 +37,11 @@ public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 		String name = attributes.getValue("name");
 		if (name == null)
 		{
-			throw new SAXException( CPE.cpeItem.getURI()+" must have name attribute" );
+			throw new SAXException( CpeItem.ELEMENT+" must have name attribute" );
 		}
-		subject = ResourceFactory.createResource( name );
-		try {
-			addTriple( subject, CPE.name, CpeParser.parse( name ));
-		} catch (CpeParsingException e) {
-			throw new SAXException( "Error parsing "+name, e);
-		}
-		addTriple( subject, RDF.type, XCPE.Cpe23Type);
+			
+		subject = addCPE(  name );
+		addTriple( subject, RDF.type, CPE23.ItemType);
 		item.addTriple( CPE23.cpe23Item, subject);
 		addTriple( subject, CPE.cpeItem, item.getSubject());
 	}
@@ -68,13 +66,16 @@ public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		String fqName = uri+localName;
-			
-			if (fqName.equals( CPE23.uri+"deprecation")) {
-				push( new Cpe23Deprecation( this, attributes ));
-			}
-			else {
-				push( new GenericElement( this, uri, localName, attributes ) );
-			}
+		if (CPE23.provenanceRecord.getURI().equals( fqName ))
+		{
+			push( new Cpe23ProvenanceRecord( this, attributes ));
+		}
+		if (CPE23.deprecation.getURI().equals( fqName )) {
+			push( new Cpe23Deprecation( this, attributes ));
+		}
+		else {
+			push( new GenericElement( this, uri, localName, attributes ) );
+		}
 
 	} 
 

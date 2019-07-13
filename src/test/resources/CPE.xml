@@ -13,7 +13,7 @@
     </references>
     <cpe-23:cpe23-item name="cpe:2.3:a:10web:form_maker:1.6.3:*:*:*:*:wordpress:*:*"/>
   </cpe-item>
-    <cpe-item name="cpe:/a:3com:tippingpoint_ips:-" deprecated="true" deprecation_date="2010-12-28T17:35:59.023Z">
+    <cpe-item name="cpe:/a:3com:tippingpoint_ips:-" deprecated_by="cpe:/h:3com:tippingpoint_ips:-" deprecated="true" deprecation_date="2010-12-28T17:35:59.023Z">
     <title xml:lang="en-US">3Com TippingPoint IPS</title>
     <cpe-23:cpe23-item name="cpe:2.3:a:3com:tippingpoint_ips:-:*:*:*:*:*:*:*">
       <cpe-23:deprecation date="2010-12-28T12:35:59.023-05:00">

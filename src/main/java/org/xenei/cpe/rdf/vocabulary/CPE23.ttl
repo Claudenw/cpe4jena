@@ -1,0 +1,176 @@
+@prefix cpe23: <http://scap.nist.gov/schema/cpe-extension/2.3> .
+@prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+##
+## Item Type
+##
+
+cpe23:ItemType rdf:type rdfs:Class ;
+    rdfs:comment """This class captures all CPE 2.3 specific data including the CPE 2.3
+                formatted string binding of the name, provenance data, and deprecation data. """ ;
+    rdfs:label "CPE 2.3 Item Type" ;
+    .
+    
+cpe23:cpe23-item rdf:type rdf:Property ;
+    rdfs:comment "a pointer to an CPE 2.3 item." ; 
+    rdfs:range cpe23:Resource ;
+    rdfs:range cpe23:ItemType ;
+    rdfs:label "CPE 2.3 Item" ;
+    .
+        
+cpe23:provenance-record rdf:type rdf:Property ;
+    rdfs:comment "a pointer to the provenance data." ; 
+    rdfs:domain cpe23:ItemType ;
+    rdfs:range cpe23:provenanceRecordType ;
+    rdfs:label "Provenance" ;
+    .
+    
+cpe23:deprecation rdf:type rdf:Property ;
+    rdfs:comment "A pointer to a deprecation entrie for the given identifier name." ; 
+    rdfs:domain cpe23:ItemType ;
+    rdfs:range cpe23:deprecationType ;
+    rdfs:label "Deprecation" ;    
+    .
+    
+cpe23:name rdf:type rdf:Property ;
+    rdfs:comment "the CPE 2.3 item name." ; 
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Name" ;    
+    .
+    
+##
+## Provenance record type
+##
+
+cpe23:provenanceRecordType rdf:type rdfs:Class ;
+    rdfs:comment "Class holding all provenance information for the given identifier." ;
+    rdfs:label "Provenance Type" ;
+    .
+
+cpe23:submitter rdf:type rdf:Property ;
+    rdfs:comment "The organization responsible for submitting the identifier name." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range cpe23:organizationType ;
+    rdfs:label "Submitter" ;
+    .
+    
+cpe23:authority rdf:type rdf:Property ;
+    rdfs:comment "The authority responsible for endorsing the identifier name. Multiple authorities may endorse the same identifier name." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range cpe23:organizationType ;
+    rdfs:label "Authority" ;
+    .
+
+cpe23:change-description rdf:type rdf:Property ;
+    rdfs:comment "A description of any changes made to the identifier name or associated metadata." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range cpe23:changeDescriptionType ;
+    rdfs:label "Authority" ;
+    .
+  
+##
+## Change description Type
+##
+
+cpe23:changeDescriptionType rdf:type rdfs:Class ;
+    rdfs:comment "A description of any changes made to the identifier name or associated metadata." ; 
+    rdfs:label "Change Description Type" ;
+    .
+    
+cpe23:evidence-reference rdf:type rdf:Property ;
+    rdfs:comment "Supporting evidence for any changes to a name or associated metadata, including a link to external information relating to the change." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range cpe23:evidenceReferenceType ;
+    rdfs:label "Evidence Reference" ;
+    .
+    
+cpe23:comments rdf:type rdf:Property ;
+    rdfs:comment "Comments explaining the rationale for the change." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Comments" ;
+    .    
+
+cpe23:change-type rdf:type rdf:Property ;
+    rdfs:comment "The type of change that occurred." ; 
+    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Change Type" ;
+    .    
+        
+cpe23:date rdf:type rdf:Property ;
+    rdfs:comment "When the change occurred." ; 
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Date of Change" ;
+    .    
+        
+##
+## Deprecation Type type
+##
+
+cpe23:deprecationType rdf:type rdfs:Class ;
+    rdfs:comment """An element containing information for a specific deprecation of an
+                identifier name. A single deprecation element may contain a list of names that the enclosing identifier
+                name was deprecated by. One deprecation element represents a deprecation that occurred at a specific
+                instant in time; it is possible that additional deprecations will occur at a later instant in time. If a
+                dictionary maintainer must submit deprecation entries after the initial deprecation, then another
+                deprecation element should be added to the identifier name. """ ;
+    rdfs:label "Deprecation Type" ;
+    .
+
+cpe23:deprecated-by rdf:type rdf:Property ;
+    rdfs:comment "the names that deprecated the identifier name. The names in the list do not have to be identifier names; they may contain wildcards and represent sets of products." ; 
+    rdfs:domain cpe23:deprecationType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Deprecated by" ;
+    .
+
+##
+##  deprecated info type
+##    
+cpe23:deprecatedInfoType rdf:type rdfs:Class ;
+    rdfs:comment "The name that is deprecating the identifier name." ; 
+    rdfs:label "Deprecation Type" ;
+    .
+
+cpe23:type rdf:type rdf:Property ;
+    rdfs:comment "the type of deprecaton" ; 
+    rdfs:domain cpe23:deprecationType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Deprecated by" ;
+    .
+    
+##
+## Organization type
+##
+
+cpe23:organizationType rdf:type rdfs:Class ;
+    rdfs:comment "A description of an orgianization." ; 
+    rdfs:label "Organization Type" ;
+    .
+    
+cpe23:description rdf:type rdf:Property ;
+    rdfs:comment "A high-level description of the organization acting as the submitter or authority. " ; 
+    rdfs:domain cpe23:organizationType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Description" ;
+    .
+    
+##
+## Evidence Reference Type
+##
+
+cpe23:evidenceReferenceType rdf:type rdfs:Class ;
+    rdfs:comment "Supporting evidence for any changes to a name or associated metadata, including a link to external information relating to the change." ; 
+    rdfs:label "Evidence Reference Type" ;
+    .
+    
+cpe23:evidenceType rdf:type rdf:Property ;
+    rdfs:comment "The type of evidence" ; 
+    rdfs:domain cpe23:evidenceReferenceType ;
+    rdfs:range rdfs:Resource ;
+    rdfs:label "Evidence Type" ;
+    .

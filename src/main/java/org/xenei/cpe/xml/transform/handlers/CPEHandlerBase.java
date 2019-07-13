@@ -3,11 +3,26 @@ package org.xenei.cpe.xml.transform.handlers;
 import java.net.URL;
 
 import org.apache.jena.graph.Node;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.xenei.cpe.rdf.CPEDatatype;
+import org.xenei.cpe.rdf.vocabulary.CPE;
+import org.xenei.cpe.rdf.vocabulary.CPE23;
+import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.CPEHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+
+import us.springett.parsers.cpe.Cpe;
+import us.springett.parsers.cpe.CpeParser;
+import us.springett.parsers.cpe.exceptions.CpeParsingException;
+import us.springett.parsers.cpe.util.Convert;
+import us.springett.parsers.cpe.values.LogicalValue;
+import us.springett.parsers.cpe.values.Part;
 
 /**
  * The abstract class that underlies all CPEHandler stack entries.
@@ -112,6 +127,109 @@ public abstract class CPEHandlerBase implements ContentHandler {
 
 	protected Node graphName() {
 		return cpeHandler.graphName();
+	}
+	
+	private void addCPEValue( Resource subject, Property property, String value)
+	{
+		if (value.equals( LogicalValue.ANY.getAbbreviation() ) ||
+				value.equals( LogicalValue.NA.getAbbreviation())) {
+			return;
+		}
+		addTriple( subject, property, value );
+	}
+	
+	protected void addOptionalAttribute( Resource subject, Attributes attributes, String name, Property property) {
+		String value = attributes.getValue( name );
+		if (value != null)
+		{
+			addTriple( subject, property, value );
+		}
+	}
+	
+	protected <T extends Enum<T>> void addOptionalAttribute( Resource subject, Class<T> enumType, Attributes attributes, String name, Property property) throws SAXException {
+		String value = attributes.getValue( name );
+		if (value != null)
+		{
+			try {
+				addTriple( subject, property, Enum.valueOf( enumType, value) );
+			}
+			catch (IllegalArgumentException e) {
+				throw new SAXException( value+" is a valid "+enumType.getSimpleName()+" value", e );
+			}
+		}
+	}
+	
+	protected void addRequiredAttribute( Resource subject, Attributes attributes, String name, Property property) throws SAXException {
+		String value = attributes.getValue( name );
+		if (value == null)
+		{
+			throw new SAXException( name+" is a requried attribute");
+		}
+		addTriple( subject, property, value );
+	}
+	
+	
+	protected <T extends Enum<T>> void addRequiredAttribute( Resource subject, Class<T> enumType, Attributes attributes, String name, Property property) throws SAXException {
+		String value = attributes.getValue( name );
+		if (value == null)
+		{
+			throw new SAXException( name+" is a requried attribute");
+		}
+		try {
+			addTriple( subject, property, Enum.valueOf( enumType, value) );
+		}
+		catch (IllegalArgumentException e) {
+			throw new SAXException( value+" is a valid "+enumType.getSimpleName()+" value", e );
+		}
+	}
+	
+	/**
+	 * Parse the cpe name into a CPE and create a URL from it.
+	 * Add all the defined properties to the resource.
+	 * @param cpeName the name
+	 * @return the resource built from the name.
+	 * @throws SAXException if the name can not be parsed.
+	 */
+	protected Resource addCPE( String cpeName ) throws SAXException {
+		Cpe cpe;
+		try {
+			cpe = CpeParser.parse( cpeName );
+		} catch (CpeParsingException e) {
+			throw new SAXException( "error parsing cpeName: "+cpeName, e );
+		}
+		return addCPE( cpe, cpeName );
+	}
+	
+	protected Literal cpeName( String name )
+	{
+		return ResourceFactory.createTypedLiteral(name, CPEDatatype.cpeDatatype);
+	}
+	/**
+	 *  URL from the CPE and add all the defined properties to it.
+	 * @param cpe the Cpe to add.
+	 * @return the resource built from the name.
+	 */
+	protected Resource addCPE( Cpe cpe, String name ) {
+		Resource result = ResourceFactory.createResource( name );
+		addTriple( result, XCPE.part, cpe.getPart());
+		addCPEValue( result, XCPE.vendor, cpe.getVendor());
+		addCPEValue( result, XCPE.product, cpe.getProduct());
+		addCPEValue( result, XCPE.version, cpe.getVersion());
+		addCPEValue( result, XCPE.update, cpe.getUpdate());
+		addCPEValue( result, XCPE.edition, cpe.getEdition());
+		addCPEValue( result, XCPE.language, cpe.getLanguage());
+		addCPEValue( result, XCPE.swEdition, cpe.getSwEdition());
+		addCPEValue( result, XCPE.targetSw, cpe.getTargetSw());
+		addCPEValue( result, XCPE.targetHw, cpe.getTargetHw());
+		addCPEValue( result, XCPE.other, cpe.getOther());
+		addTriple( result, XCPE.name, cpeName( name ) );
+		if (name.startsWith( "cpe:/")) {
+			addTriple( result, CPE.name, cpeName( name ) );
+		}
+		else {
+			addTriple( result, CPE23.name, cpeName( name ) );
+		}		
+		return result;
 	}
 	
 	@Override
