@@ -98,6 +98,7 @@ cpe:check rdf:type rdf:Property ;
     
 cpe:name rdf:type rdf:Property ;
     rdfs:comment "a single CPE Name" ;
+    rdfs:domain cpe:ItemType ;
     rdfs:range rdfs:Literal ;
     rdfs:label "Name" ;
     .

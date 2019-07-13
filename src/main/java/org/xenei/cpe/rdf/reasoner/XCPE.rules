@@ -1,0 +1,25 @@
+@prefix cpe23: <http://scap.nist.gov/schema/cpe-extension/2.3> .
+@prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix xcpe: <http://xenei.org/cpe/rdf#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+## RDFS interesting bits
+
+[rdfs2:  (?x ?p ?y), (?p rdfs:domain ?c) -> (?x rdf:type ?c)]
+[rdfs3:  (?x ?p ?y), (?p rdfs:range ?c) -> (?y rdf:type ?c)]
+[rdfs6:  (?a ?p ?b), (?p rdfs:subPropertyOf ?q) -> (?a ?q ?b)]
+[rdfs9:  (?x rdfs:subClassOf ?y), (?a rdf:type ?x) -> (?a rdf:type ?y)]
+
+## OWL inverseOf
+
+[owlInv:  (?P owl:inverseOf ?P2), (?x ?P ?y) -> (?y ?P2 ?x)]
+[owlInv2: (?P owl:inverseOf ?P2), (?x ?P2 ?y) -> (?y ?P ?x)]
+
+## cpe:name implies xcpe:name
+[cpeName: ( ?c cpe:name ?n ) -> ( ?c xcpe:name ?n )]
+
+## cpe23:name implies xcpe:name
+[cpe23Name: ( ?c cpe23:name ?n ) -> ( ?c xcpe:name ?n )]
+
+[cpeDep: ( ?c cpe:deprecated_by ?d ) -> ( ?c xcpe:deprecated-by ?d )]
+[cpe23Dep: (?c cpe23:deprecation ?d ), (?d cpe23:deprecated-by ?b ), (?b cpe23:cpe23-item ?i) -> (?c xcpe:deprecated-by ?i)]

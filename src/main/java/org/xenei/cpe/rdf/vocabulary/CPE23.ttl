@@ -37,7 +37,8 @@ cpe23:deprecation rdf:type rdf:Property ;
     .
     
 cpe23:name rdf:type rdf:Property ;
-    rdfs:comment "the CPE 2.3 item name." ; 
+    rdfs:comment "the CPE 2.3 item name." ;
+    rdfs:domain cpe23:ItemType ; 
     rdfs:range rdfs:Literal ;
     rdfs:label "Name" ;    
     .
