@@ -24,7 +24,20 @@
 <cpe-item name="cpe:/h:3com:tippingpoint_ips:-">
     <title xml:lang="ja-JP">スリーコム TippingPoint IPS</title>
     <title xml:lang="en-US">3Com TippingPoint IPS</title>
-    <cpe-23:cpe23-item name="cpe:2.3:h:3com:tippingpoint_ips:-:*:*:*:*:*:*:*"/>
+    <cpe-23:cpe23-item name="cpe:2.3:h:3com:tippingpoint_ips:-:*:*:*:*:*:*:*">
+        <cpe-23:provenance-record>
+            <cpe-23:submitter system-id="http://example.com/submitter" name="submitter" date="2010-12-28T12:35:59.023-05:00">
+                <cpe-23:description>The submitter organization</cpe-23:description>
+            </cpe-23:submitter>
+            <cpe-23:authority system-id="http://example.com/authority" name="authority" date="2010-12-28T12:35:59.023-05:00">
+                <cpe-23:description>The authority organization</cpe-23:description>
+            </cpe-23:authority>
+            <cpe-23:change-description change-type="AUTHORITY_CHANGE" date="2010-12-28T12:35:59.023-05:00">
+                <cpe-23:evidence-reference evidence="CURATOR_UPDATE">http://example.com/reference</cpe-23:evidence-reference>
+                <cpe-23:comments>The change description comment text</cpe-23:comments>
+             </cpe-23:change-description>
+        </cpe-23:provenance-record>
+    </cpe-23:cpe23-item>
   </cpe-item>
   <cpe-item name="cpe:/h:hp:advancestack_10base-t_switching_hub_j3200a:-">
     <title xml:lang="en-US">cpe:/h:HP:AdvanceStack 10Base-T Switching Hub J3200A</title>
@@ -32,6 +45,7 @@
       <note>Use product number and detail plain name</note>
     </notes>
     <cpe-23:cpe23-item name="cpe:2.3:h:hp:advancestack_10base-t_switching_hub_j3200a:-:*:*:*:*:*:*:*"/>
+    <check system="http://example.com/OVAL" href="http://example.com/external+file" >The Test Identifier</check>
   </cpe-item>
 
 </cpe-list>

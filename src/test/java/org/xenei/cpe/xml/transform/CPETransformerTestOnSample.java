@@ -35,7 +35,9 @@ import org.xenei.cpe.rdf.CPEDatatype;
 import org.xenei.cpe.rdf.connection.RDFConnectionStream;
 import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
+import org.xenei.cpe.rdf.vocabulary.ChangeType;
 import org.xenei.cpe.rdf.vocabulary.DeprecationType;
+import org.xenei.cpe.rdf.vocabulary.EvidenceType;
 import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xml.sax.SAXException;
 
@@ -118,13 +120,61 @@ public class CPETransformerTestOnSample {
 	}
 	
 	@Test
-	public void test23Provonance( ) {
-		fail( "not implemented");
+	public void test23Provenance( ) {
+		Resource s = model.createResource("cpe:2.3:h:3com:tippingpoint_ips:-:*:*:*:*:*:*:*");
+		Statement stmt = s.getRequiredProperty( CPE23.provenanceRecord ); 
+		Resource provenance = stmt.getResource();
+		assertTrue( "missing provenance record type", provenance.hasProperty( RDF.type, CPE23.ProvenanceRecordType));
+		
+		// check submitter 
+		stmt = provenance.getRequiredProperty(CPE23.submitter);
+		Resource submitter = stmt.getResource();
+		assertTrue( "missing submitter date", submitter.hasLiteral( CPE23.date,  "2010-12-28T12:35:59.023-05:00" ));		
+		assertTrue( "submitter missing organization type", submitter.hasProperty( RDF.type, CPE23.OrganizationType));
+		stmt = submitter.getRequiredProperty( CPE23.systemId);
+		Resource org = stmt.getResource();
+		assertEquals( "Wrong url for submitter org", ResourceFactory.createResource("http://example.com/submitter"), org );
+		assertTrue( "missing submitter org name", org.hasLiteral( CPE23.name, "submitter"));
+		assertTrue( "missing submitter org description", org.hasLiteral( CPE23.description, "The submitter organization" ));
+		assertTrue( "submitter org missing organization type", org.hasProperty( RDF.type, XCPE.Organization));
+		
+		// check authority
+		stmt = provenance.getRequiredProperty(CPE23.authority);
+		Resource authority = stmt.getResource();
+		assertTrue( "missing authority date", authority.hasLiteral( CPE23.date,  "2010-12-28T12:35:59.023-05:00" ));		
+		assertTrue( "authority missing organization type", authority.hasProperty( RDF.type, CPE23.OrganizationType));
+		stmt = authority.getRequiredProperty( CPE23.systemId );
+		org = stmt.getResource();
+		assertEquals( "Wrong url for authority org", ResourceFactory.createResource("http://example.com/authority"), org );
+		assertTrue( "missing submitter org name", org.hasLiteral( CPE23.name, "authority"));
+		assertTrue( "missing submitter org description", org.hasLiteral( CPE23.description, "The authority organization" ));
+		assertTrue( "submitter org missing organization type", org.hasProperty( RDF.type, XCPE.Organization));
+		
+		// check change-description
+		stmt = provenance.getRequiredProperty( CPE23.changeDescription );
+		Resource change = stmt.getResource();
+		assertEquals( "wrong change type", ChangeType.AUTHORITY_CHANGE, change.getRequiredProperty( CPE23.changeType).getLiteral().getValue());
+		assertTrue( "wrong change date", change.hasLiteral( CPE23.date,  "2010-12-28T12:35:59.023-05:00" ));
+		assertEquals( "missing change evidence", EvidenceType.CURATOR_UPDATE, change.getRequiredProperty( CPE23.evidence).getLiteral().getValue());
+		Resource url = model.createResource( "http://example.com/reference" );
+		assertTrue( "missing change evidence reference", change.hasProperty( CPE23.evidenceReference, url ));
+		assertTrue( "missing change comments", change.hasProperty( CPE23.comments, "The change description comment text"));
+	
+		assertTrue( "change evidence reference missing Evidence Reference Type", url.hasProperty( RDF.type, CPE23.EvidenceReferenceType));
 	}
 	
 	@Test
 	public void testCheck() {
-		fail( "not implemented");
+		Resource s = model.createResource( "cpe:/h:hp:advancestack_10base-t_switching_hub_j3200a:-" );
+		assertTrue( "missing check", s.hasProperty( CPE.check ));
+		Statement stmt = s.getProperty( CPE.check );
+		Resource check = stmt.getResource();
+		assertTrue( "missing check type", check.hasProperty( RDF.type, CPE.ChecktypeType));
+		Resource url = ResourceFactory.createResource( "http://example.com/OVAL");
+		assertTrue( "missing system", check.hasProperty( CPE.system, url));
+		url = ResourceFactory.createResource( "http://example.com/external+file");
+		assertTrue( "missing href", check.hasProperty( CPE.href, url));
+		assertTrue( "missing value", check.hasProperty( XCPE.checkText, "The Test Identifier"));
 	}
 	
 	@Test

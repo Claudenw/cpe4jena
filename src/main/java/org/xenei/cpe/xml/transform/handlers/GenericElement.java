@@ -2,6 +2,7 @@ package org.xenei.cpe.xml.transform.handlers;
 
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -14,7 +15,7 @@ import org.xml.sax.SAXException;
 public class GenericElement extends CPEHandlerBase {
 
 	private Property predicate;
-	private SubjectHandler subject;
+	private Resource subject;
 	private StringBuilder sb;
 	private String lang;
 	
@@ -30,6 +31,25 @@ public class GenericElement extends CPEHandlerBase {
 	 */
 	public GenericElement(SubjectHandler subject, String uri, String localName, Attributes attributes) {
 		super( (CPEHandlerBase) subject);
+		this.subject = subject.getSubject();
+		this.sb = new StringBuilder();
+		this.predicate = ResourceFactory.createProperty(uri, localName);
+		this.lang = attributes.getValue( "xml:lang");
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * Only the xml:lang attribute is processed.  All others are ignored.
+	 * 
+	 * @param baseHandler the baseHandler for the queue.
+	 * @param subject the Resource to add the property to.
+	 * @param uri the URI for this generic element.
+	 * @param localName the local name for this generic element.
+	 * @param attributes the attributes for this generic element.
+	 */
+	public GenericElement(CPEHandlerBase baseHandler, Resource subject, String uri, String localName, Attributes attributes) {
+		super( baseHandler );
 		this.subject = subject;
 		this.sb = new StringBuilder();
 		this.predicate = ResourceFactory.createProperty(uri, localName);
@@ -54,7 +74,7 @@ public class GenericElement extends CPEHandlerBase {
 		if (predicate.getURI().equals( fqName ))
 		{
 			Literal object = ResourceFactory.createLangLiteral(sb.toString(), lang==null?"":lang);
-			subject.addTriple( predicate, object);
+			addTriple( subject, predicate, object);
 			pop();
 		}
 		else {

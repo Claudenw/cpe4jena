@@ -30,9 +30,10 @@ public class CpeCheck extends CPEHandlerBase {
 	public CpeCheck(CpeItem item, Attributes attributes) throws SAXException {
 		super(item);
 		subject = ResourceFactory.createResource( "url:uuid:"+UUID.randomUUID().toString());
+		item.addTriple( CPE.check, subject);
 		addTriple( subject, RDF.type, CPE.ChecktypeType );
-		addRequiredAttribute( subject, attributes, "system", CPE.system );
-		addOptionalAttribute( subject, attributes, "href", CPE.href );
+		addRequiredURLAttribute( subject, attributes, "system", CPE.system );
+		addOptionalURLAttribute( subject, attributes, "href", CPE.href );
 		sb = new StringBuilder();
 	}
 

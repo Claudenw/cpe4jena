@@ -70,6 +70,8 @@ public class XCPE{
     public static final Property targetHw = property( "targetHw" );
     public static final Property other = property( "other" );
 
+    public static final Resource Organization = resource( "Organization" ); 
+
     //public static final Property deprecatedReason = property( "deprecatedReason");
     public static final Property deprecates = property( "deprecates");
     public static final Property name = property( "name" );

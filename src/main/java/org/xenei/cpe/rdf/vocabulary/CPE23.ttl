@@ -81,22 +81,29 @@ cpe23:changeDescriptionType rdf:type rdfs:Class ;
     .
     
 cpe23:evidence-reference rdf:type rdf:Property ;
-    rdfs:comment "Supporting evidence for any changes to a name or associated metadata, including a link to external information relating to the change." ; 
-    rdfs:domain cpe23:provenanceRecordType ;
-    rdfs:range cpe23:evidenceReferenceType ;
+    rdfs:comment "A link to external information relating to the change." ; 
+    rdfs:domain cpe23:changeDescriptionType ;
+    rdfs:range rdfs:Resource ;
     rdfs:label "Evidence Reference" ;
     .
     
+cpe23:evidence rdf:type rdf:Property ;
+    rdfs:comment "The evidence type" ; 
+    rdfs:domain cpe23:changeDescriptionType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Evidence Reference" ;
+    .
+        
 cpe23:comments rdf:type rdf:Property ;
     rdfs:comment "Comments explaining the rationale for the change." ; 
-    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:domain cpe23:changeDescriptionType ;
     rdfs:range rdfs:Literal ;
     rdfs:label "Comments" ;
     .    
 
 cpe23:change-type rdf:type rdf:Property ;
     rdfs:comment "The type of change that occurred." ; 
-    rdfs:domain cpe23:provenanceRecordType ;
+    rdfs:domain cpe23:changeDescriptionType ;
     rdfs:range rdfs:Literal ;
     rdfs:label "Change Type" ;
     .    
@@ -154,9 +161,16 @@ cpe23:organizationType rdf:type rdfs:Class ;
     
 cpe23:description rdf:type rdf:Property ;
     rdfs:comment "A high-level description of the organization acting as the submitter or authority. " ; 
-    rdfs:domain cpe23:organizationType ;
+    rdfs:domain rdfs:Resource ;
     rdfs:range rdfs:Literal ;
-    rdfs:label "Description" ;
+    rdfs:label "Description of the organization" ;
+    .
+
+cpe23:system-id rdf:type rdf:Property ;
+    rdfs:comment "A high-level description of the organization acting as the submitter or authority. " ; 
+    rdfs:domain cpe23:organizationType ;
+    rdfs:range rdfs:Resource ;
+    rdfs:label "the URL for the organization" ;
     .
     
 ##

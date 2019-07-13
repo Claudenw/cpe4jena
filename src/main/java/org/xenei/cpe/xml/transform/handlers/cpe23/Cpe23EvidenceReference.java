@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.VOID;
 import org.xenei.cpe.rdf.vocabulary.CPE;
@@ -22,7 +23,7 @@ import org.xml.sax.SAXException;
 public class Cpe23EvidenceReference extends CPEHandlerBase {
 
 	private final StringBuilder sb;
-	private final Resource subject;
+	private final Cpe23ChangeDescription item;
 
 	/**
 	 * Constructor.
@@ -32,10 +33,8 @@ public class Cpe23EvidenceReference extends CPEHandlerBase {
 	 */
 	public Cpe23EvidenceReference(Cpe23ChangeDescription item, Attributes attributes) throws SAXException {
 		super(item);
-		this.subject = ResourceFactory.createResource( "urn:uuid:"+UUID.randomUUID().toString());
-		
-		addRequiredAttribute( subject, EvidenceType.class, attributes, "evidence", CPE23.evidenceType);
-		item.addTriple(CPE23.evidenceReference, subject);
+		this.item = item;
+		addRequiredAttribute( item.getSubject(), EvidenceType.class, attributes, "evidence", CPE23.evidence);		
 		sb = new StringBuilder();
 	}
 
@@ -48,9 +47,9 @@ public class Cpe23EvidenceReference extends CPEHandlerBase {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
 		if (CPE23.evidenceReference.getURI().equals(fqName)) {
-			Resource evidence = ResourceFactory.createResource(sb.toString());
-			
-			addTriple(subject, XCPE.evidenceURL, evidence);
+			Resource evidence = ResourceFactory.createResource(sb.toString());			
+			item.addTriple(CPE23.evidenceReference, evidence);
+			addTriple( evidence, RDF.type, CPE23.EvidenceReferenceType);
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

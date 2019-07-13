@@ -146,6 +146,13 @@ public abstract class CPEHandlerBase implements ContentHandler {
 		}
 	}
 	
+	protected void addOptionalURLAttribute( Resource subject, Attributes attributes, String name, Property property) {
+		String value = attributes.getValue( name );
+		if (value != null)
+		{
+			addTriple( subject, property, ResourceFactory.createResource( value ) );
+		}
+	}
 	protected <T extends Enum<T>> void addOptionalAttribute( Resource subject, Class<T> enumType, Attributes attributes, String name, Property property) throws SAXException {
 		String value = attributes.getValue( name );
 		if (value != null)
@@ -166,6 +173,15 @@ public abstract class CPEHandlerBase implements ContentHandler {
 			throw new SAXException( name+" is a requried attribute");
 		}
 		addTriple( subject, property, value );
+	}
+	
+	protected void addRequiredURLAttribute( Resource subject, Attributes attributes, String name, Property property) throws SAXException {
+		String value = attributes.getValue( name );
+		if (value == null)
+		{
+			throw new SAXException( name+" is a requried attribute");
+		}
+		addTriple( subject, property, ResourceFactory.createResource(value) );
 	}
 	
 	

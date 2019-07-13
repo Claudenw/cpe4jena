@@ -70,7 +70,7 @@ public class Cpe23Item extends CPEHandlerBase implements SubjectHandler {
 		{
 			push( new Cpe23ProvenanceRecord( this, attributes ));
 		}
-		if (CPE23.deprecation.getURI().equals( fqName )) {
+		else if (CPE23.deprecation.getURI().equals( fqName )) {
 			push( new Cpe23Deprecation( this, attributes ));
 		}
 		else {

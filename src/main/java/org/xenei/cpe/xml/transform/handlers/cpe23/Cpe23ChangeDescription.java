@@ -54,7 +54,7 @@ public class Cpe23ChangeDescription extends CPEHandlerBase implements SubjectHan
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri+localName;
-		if (fqName.equals( CPE23.provenanceRecord.getURI() ))
+		if (fqName.equals( CPE23.changeDescription.getURI() ))
 		{
 			pop();
 		} else {

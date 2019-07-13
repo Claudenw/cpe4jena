@@ -37,8 +37,9 @@ public class CPE23 {
 	
 	public static final Resource ChangeDescriptionType = resource( "changeDescriptionType");
 	public static final Property evidenceReference = property( "evidence-reference" );
+	public static final Property evidence = property( "evidence" );
 	public static final Property comments = property( "comments" );
-	public static final Property changeType = property( "changeType" );
+	public static final Property changeType = property( "change-type" );
 	public static final Property date = property( "date" );
 	
 	public static final Resource DeprecationType = resource( "deprecationType");
@@ -51,13 +52,12 @@ public class CPE23 {
 	
 	public static final Resource OrganizationType = resource( "organizationType");
 	public static final Property description = property( "description" );
+	public static final Property systemId = property( "system-id" );
 	// name included as well
 	// date included as well
 	
 	public static final Resource EvidenceReferenceType = resource( "evidenceReferenceType");
-	public static final Property evidenceType = property( "evidenceType" );
-	// name included as well
-	// date included as well
+
 	
 	static {
 		URL url = CPE.class.getResource("./CPE23.ttl");

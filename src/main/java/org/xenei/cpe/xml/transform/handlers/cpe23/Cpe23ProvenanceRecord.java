@@ -39,9 +39,8 @@ public class Cpe23ProvenanceRecord extends CPEHandlerBase implements SubjectHand
 			
 		if (fqName.equals( CPE23.submitter.getURI())) {
 			push( new Cpe23Organization( this, CPE23.submitter, attributes ));
-		}
-		else if (fqName.equals( CPE23.authority.getURI())) {
-			push( new Cpe23Organization( this, CPE23.submitter, attributes ));
+		} else if (fqName.equals( CPE23.authority.getURI())) {
+			push( new Cpe23Organization( this, CPE23.authority, attributes ));
 		} else if (fqName.equals( CPE23.changeDescription.getURI())) {
 			push( new Cpe23ChangeDescription( this, attributes ));
 		}
