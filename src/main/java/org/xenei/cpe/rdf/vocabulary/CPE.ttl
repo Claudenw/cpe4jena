@@ -1,4 +1,5 @@
 @prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix xcpe: <http://xenei.org/cpe/rdf#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -143,14 +144,14 @@ cpe:CheckType rdf:type rdf:Class ;
 cpe:system rdf:type rdf:Property ;
     rdfs:comment "The URI for a particular version of OVAL or a related system testing language." ;
     rdfs:domain cpe:CheckType ;
-    rdfs:range rdfs:Resource ;
+    rdfs:range xcpe:URL ;
     rdfs:label "Testing System" ;
     .
 
 cpe:href rdf:type rdf:Property ;
     rdfs:comment "An external file reference." ;
     rdfs:domain cpe:ReferenceType ;
-    rdfs:range rdfs:Resource ;
+    rdfs:range xcpe:URL ;
     rdfs:label "Content Test Identifier" ;
     
     

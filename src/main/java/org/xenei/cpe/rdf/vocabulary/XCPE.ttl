@@ -1,0 +1,148 @@
+@prefix xcpe: <http://xenei.org/cpe/rdf#> .
+@prefix cpe23: <http://scap.nist.gov/schema/cpe-extension/2.3> .
+@prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+
+##
+## Item Type
+##
+
+xcpe:ItemType rdf:type rdfs:Class ;
+    rdfs:comment "A class that has CPE name segments defined" ;
+    rdfs:label "XCPE Item Type" ;
+    .
+    
+xcpe:deprecates rdf:type rdf:Property ;
+    rdfs:comment "A pointer to an Item that this Item deprecates" ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range xcpe:ItemType ;
+    rdfs:label "XCPE deprecates" ;
+    .
+
+xcpe:deprecated-by rdf:type rdf:Property ;
+    rdfs:comment "A pointer to an Item that this Item is deprecated by" ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range xcpe:ItemType ;
+    rdfs:label "XCPE deprecated by" ;
+    owl:inverseOf xcpe:deprecates ;
+    .
+
+xcpe:part rdf:type rdf:Property ;
+    rdfs:comment "The part as defined by CPE names (e.g. Application, Operating System, Hardware Device)." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Part" ;
+    .
+
+xcpe:vendor rdf:type rdf:Property ;
+    rdfs:comment "The vendor as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Vendor" ;
+    .
+
+xcpe:product rdf:type rdf:Property ;
+    rdfs:comment "The productr as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Product" ;
+    .
+
+xcpe:version rdf:type rdf:Property ;
+    rdfs:comment "The version as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Version" ;
+    .
+
+xcpe:update rdf:type rdf:Property ;
+    rdfs:comment "The update as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Update" ;
+    .
+
+xcpe:edition rdf:type rdf:Property ;
+    rdfs:comment "The edition as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Edition" ;
+    .
+
+xcpe:language rdf:type rdf:Property ;
+    rdfs:comment "The language as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Language" ;
+    .    
+
+xcpe:swEdition rdf:type rdf:Property ;
+    rdfs:comment "The software edition as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Software Edition" ;
+    .
+
+xcpe:targetSw rdf:type rdf:Property ;
+    rdfs:comment "The target software as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Target Software" ;
+    .
+    
+xcpe:targetHw rdf:type rdf:Property ;
+    rdfs:comment "The target hardware as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Target Hardware" ;
+    .
+
+xcpe:other rdf:type rdf:Property ;
+    rdfs:comment "The other as defined by CPE names." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Other" ;
+    .
+
+xcpe:name rdf:type rdf:Property ;
+    rdfs:comment "The CPE name of any version." ; 
+    rdfs:domain xcpe:ItemType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "CPE Name" ;
+    .
+
+##
+## resource used with Cpe or cpe23 objects
+##
+
+xcpe:URL rdf:type rdf:Class ;
+    rdfs:comment "A class that has identifies a URL" ;
+    rdfs:label "URL" ;
+    .
+
+xcpe:Organization rdf:type rdf:Class ;    
+    rdfs:comment "A class that has identifies a URL that identifies an Organization" ;
+    rdfs:label "CPE Organization" ;
+    .
+
+xcpe:CpeGraph rdf:type rdf:Class ;    
+    rdfs:comment "A class that has identifies a graph that contains CPE data." ;
+    rdfs:label "CPE Graph" ;
+    .
+
+xcpe:referenceURL rdf:type rdf:Property ;
+    rdfs:comment "The CPE name of any version." ; 
+    rdfs:domain cpe:ReferencesType ;
+    rdfs:range xcpe:URL ;
+    rdfs:label "Reference URL" ;
+    .
+
+xcpe:checkText rdf:type rdf:Property ;
+    rdfs:comment "The text for a CPE check." ; 
+    rdfs:domain cpe:CheckType ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "Check Text" ;
+    .

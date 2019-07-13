@@ -1,5 +1,6 @@
 @prefix cpe23: <http://scap.nist.gov/schema/cpe-extension/2.3> .
 @prefix cpe: <http://cpe.mitre.org/dictionary/2.0> .
+@prefix xcpe: <http://xenei.org/cpe/rdf#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -83,7 +84,7 @@ cpe23:changeDescriptionType rdf:type rdfs:Class ;
 cpe23:evidence-reference rdf:type rdf:Property ;
     rdfs:comment "A link to external information relating to the change." ; 
     rdfs:domain cpe23:changeDescriptionType ;
-    rdfs:range rdfs:Resource ;
+    rdfs:range xcpe:URL ;
     rdfs:label "Evidence Reference" ;
     .
     
@@ -169,7 +170,7 @@ cpe23:description rdf:type rdf:Property ;
 cpe23:system-id rdf:type rdf:Property ;
     rdfs:comment "A high-level description of the organization acting as the submitter or authority. " ; 
     rdfs:domain cpe23:organizationType ;
-    rdfs:range rdfs:Resource ;
+    rdfs:range xcpe:URL ;
     rdfs:label "the URL for the organization" ;
     .
     
@@ -180,11 +181,4 @@ cpe23:system-id rdf:type rdf:Property ;
 cpe23:evidenceReferenceType rdf:type rdfs:Class ;
     rdfs:comment "Supporting evidence for any changes to a name or associated metadata, including a link to external information relating to the change." ; 
     rdfs:label "Evidence Reference Type" ;
-    .
-    
-cpe23:evidenceType rdf:type rdf:Property ;
-    rdfs:comment "The type of evidence" ; 
-    rdfs:domain cpe23:evidenceReferenceType ;
-    rdfs:range rdfs:Resource ;
-    rdfs:label "Evidence Type" ;
     .

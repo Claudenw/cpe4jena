@@ -59,7 +59,7 @@ public class CPEFactory {
 	 */
 	public static Resource buildResource( Cpe cpe ) {
 		Model model = ModelFactory.createDefaultModel();
-		Resource result = model.createResource( cpe.toString(), XCPE.Cpe );		
+		Resource result = model.createResource( cpe.toString(), XCPE.Item );		
 		for (CPESegment segment : CPESegment.values())
 		{
 			model.add( segment.property(), DC_11.description,  segment.description() );
@@ -107,12 +107,7 @@ public class CPEFactory {
 	 */
 	public static Model getSchema() {
 		Model model = ModelFactory.createDefaultModel();
-		for (CPESegment segment : CPESegment.values())
-		{
-			model.add( segment.property(), DC_11.description,  segment.description() );
-			model.add( segment.property(), RDF.type, RDF.Property );
-		}
-		model.add( XCPE.Cpe, DC.description, "epresentation of a Common Platform Enumeration (CPE)" );
+		model.add( XCPE.getSchema() );
 		return model;
 	}
 	
