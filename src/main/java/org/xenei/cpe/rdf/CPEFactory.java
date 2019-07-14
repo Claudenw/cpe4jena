@@ -22,9 +22,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.vocabulary.DC;
 import org.apache.jena.vocabulary.DC_11;
-import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.XCPE;
 
 import us.springett.parsers.cpe.Cpe;

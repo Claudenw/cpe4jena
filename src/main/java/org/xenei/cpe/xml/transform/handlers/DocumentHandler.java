@@ -1,6 +1,5 @@
 package org.xenei.cpe.xml.transform.handlers;
 
-import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.xml.transform.CPEHandler;
 import org.xenei.cpe.xml.transform.handlers.cpe.CpeList;
 import org.xml.sax.Attributes;

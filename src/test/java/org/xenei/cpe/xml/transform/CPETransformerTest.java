@@ -1,14 +1,8 @@
 package org.xenei.cpe.xml.transform;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -17,20 +11,11 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
-import org.apache.jena.riot.system.StreamRDF;
 import org.apache.jena.riot.system.StreamRDFCountingBase;
 import org.junit.Test;
 import org.xenei.cpe.rdf.connection.RDFConnectionStream;
-import org.xenei.cpe.rdf.vocabulary.CPE;
-import org.xenei.cpe.rdf.vocabulary.CPE23;
-import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xml.sax.SAXException;
 
 public class CPETransformerTest {

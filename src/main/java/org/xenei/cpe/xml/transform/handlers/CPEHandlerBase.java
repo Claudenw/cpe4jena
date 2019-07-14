@@ -20,9 +20,7 @@ import org.xml.sax.SAXException;
 import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
-import us.springett.parsers.cpe.util.Convert;
 import us.springett.parsers.cpe.values.LogicalValue;
-import us.springett.parsers.cpe.values.Part;
 
 /**
  * The abstract class that underlies all CPEHandler stack entries.

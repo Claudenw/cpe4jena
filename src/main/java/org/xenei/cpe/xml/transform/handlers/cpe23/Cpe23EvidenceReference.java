@@ -1,17 +1,10 @@
 package org.xenei.cpe.xml.transform.handlers.cpe23;
 
-import java.util.UUID;
-
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.RDFS;
-import org.apache.jena.vocabulary.VOID;
-import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
 import org.xenei.cpe.rdf.vocabulary.EvidenceType;
-import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

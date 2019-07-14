@@ -1,6 +1,5 @@
 package org.xenei.cpe.xml.transform.handlers.cpe;
 
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE;

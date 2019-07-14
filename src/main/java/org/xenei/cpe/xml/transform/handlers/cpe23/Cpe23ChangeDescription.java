@@ -2,7 +2,6 @@ package org.xenei.cpe.xml.transform.handlers.cpe23;
 
 import java.util.UUID;
 
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;

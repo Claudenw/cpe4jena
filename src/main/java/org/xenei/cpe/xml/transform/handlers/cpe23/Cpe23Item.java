@@ -2,21 +2,15 @@ package org.xenei.cpe.xml.transform.handlers.cpe23;
 
 
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.RDF;
 import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
-import org.xenei.cpe.rdf.vocabulary.XCPE;
 import org.xenei.cpe.xml.transform.handlers.GenericElement;
 import org.xenei.cpe.xml.transform.handlers.CPEHandlerBase;
 import org.xenei.cpe.xml.transform.handlers.SubjectHandler;
 import org.xenei.cpe.xml.transform.handlers.cpe.CpeItem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
-import us.springett.parsers.cpe.Cpe;
-import us.springett.parsers.cpe.CpeParser;
-import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
 /**
  * Handler for a CPE23 element.

@@ -1,7 +1,6 @@
 package org.xenei.cpe.rdf.reasoner;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jena.rdf.model.InfModel;
@@ -9,12 +8,15 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
-import org.apache.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
 import org.apache.jena.reasoner.rulesys.Rule;
 import org.xenei.cpe.rdf.vocabulary.CPE;
 import org.xenei.cpe.rdf.vocabulary.CPE23;
 import org.xenei.cpe.rdf.vocabulary.XCPE;
 
+/**
+ * Build a reasoner for the XCPE classes.
+ *
+ */
 public class XcpeReasoner {
 
 	public static InfModel createInfModel( Model data )
