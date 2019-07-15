@@ -17,46 +17,45 @@ import org.xml.sax.SAXException;
  * Handles the CPE23 organization types element.
  *
  */
-public class Cpe23Organization extends CPEHandlerBase  {	
+public class Cpe23Organization extends CPEHandlerBase {
 	private final Resource org;
 	private final Resource predicate;
 
-	
 	/**
 	 * Constructor.
-	 * @param item the CPE23 Item this deprecation is associated with.
-	 * @param predicate the predicate describing this organization type.
+	 * 
+	 * @param item       the CPE23 Item this deprecation is associated with.
+	 * @param predicate  the predicate describing this organization type.
 	 * @param attributes the attributes for this element.
 	 * @throws SAXException if the attributes does not contain a date attribute.
 	 */
-	public Cpe23Organization( Cpe23ProvenanceRecord item, Property predicate, Attributes attributes) throws SAXException
-	{
-		super( item );
+	public Cpe23Organization(Cpe23ProvenanceRecord item, Property predicate, Attributes attributes)
+			throws SAXException {
+		super(item);
 		this.predicate = predicate;
-		Resource subject = ResourceFactory.createResource( "urn:uuid:"+UUID.randomUUID().toString());
-		addTriple( subject, RDF.type, CPE23.OrganizationType );
-		item.addTriple( predicate, subject );
-		String systemId = attributes.getValue( "system-id");
+		Resource subject = ResourceFactory.createResource("urn:uuid:" + UUID.randomUUID().toString());
+		addTriple(subject, RDF.type, CPE23.OrganizationType);
+		item.addTriple(predicate, subject);
+		String systemId = attributes.getValue("system-id");
 		if (systemId == null) {
-			throw new SAXException( predicate.getURI()+" subjects must have a system-id attribute." );
+			throw new SAXException(predicate.getURI() + " subjects must have a system-id attribute.");
 		}
-		org = ResourceFactory.createResource( systemId );
-		addTriple( subject, CPE23.systemId, org );
-		addTriple( org, RDF.type, XCPE.Organization );
-		addRequiredAttribute( org, attributes, "name", CPE23.name );
-		addOptionalAttribute( subject, attributes, "date", CPE23.date );
+		org = ResourceFactory.createResource(systemId);
+		addTriple(subject, CPE23.systemId, org);
+		addTriple(org, RDF.type, XCPE.Organization);
+		addRequiredAttribute(org, attributes, "name", CPE23.name);
+		addOptionalAttribute(subject, attributes, "date", CPE23.date);
 	}
-	
+
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		push( new GenericElement( this, org, uri, localName, attributes ) );
-	} 
-	
+		push(new GenericElement(this, org, uri, localName, attributes));
+	}
+
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		String fqName = uri+localName;
-		if (fqName.equals( predicate.getURI() ))
-		{
+		String fqName = uri + localName;
+		if (fqName.equals(predicate.getURI())) {
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

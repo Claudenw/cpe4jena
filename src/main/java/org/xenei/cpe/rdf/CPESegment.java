@@ -23,91 +23,84 @@ import org.apache.jena.rdf.model.Property;
 import org.xenei.cpe.rdf.vocabulary.XCPE;
 
 public enum CPESegment {
-	part( "the type of entry: application, operating system, or hardware", XCPE.part),
-	vendor( "the vendor of the CPE entry", XCPE.vendor),
-    product( "the product of the CPE entry", XCPE.product),
-    version( "the version of the CPE entry", XCPE.version),
-    update( "the update of the CPE entry", XCPE.update),
-    edition( "the edition of the CPE entry", XCPE.edition),
-    language( "the language of the CPE entry", XCPE.language),
-    swEdition( "the swEdition of the CPE entry", XCPE.swEdition),
-    targetSw( "the targetSw of the CPE entry", XCPE.targetSw),
-    targetHw( "the targetHw of the CPE entry", XCPE.targetHw),
-    other( "the other of the CPE entry", XCPE.other);
-    
-    private String desc;
-    private Property prop;
-    
-    CPESegment( String desc, Property prop )
-    {
+	part("the type of entry: application, operating system, or hardware", XCPE.part),
+	vendor("the vendor of the CPE entry", XCPE.vendor), product("the product of the CPE entry", XCPE.product),
+	version("the version of the CPE entry", XCPE.version), update("the update of the CPE entry", XCPE.update),
+	edition("the edition of the CPE entry", XCPE.edition), language("the language of the CPE entry", XCPE.language),
+	swEdition("the swEdition of the CPE entry", XCPE.swEdition),
+	targetSw("the targetSw of the CPE entry", XCPE.targetSw), targetHw("the targetHw of the CPE entry", XCPE.targetHw),
+	other("the other of the CPE entry", XCPE.other);
+
+	private String desc;
+	private Property prop;
+
+	CPESegment(String desc, Property prop) {
 		this.desc = desc;
 		this.prop = prop;
-    }
+	}
 
-    public String description() {
-    	return desc;
-    }
-    
-    public Property property() {
-    	return prop;
-    }
-    
-    public String extractSegment( Cpe cpe )
-    {
-    	switch( this ) {
-    		case part:
-    			return cpe.getPart().getAbbreviation();
-    		case vendor:
-    			return cpe.getVendor();
-    		case product:
-    			return cpe.getProduct();
-    		case version:
-    			return cpe.getVersion();
-    		case update:
-    			return cpe.getUpdate();
-    		case edition:
-    			return cpe.getEdition();
-    		case language:
-    			return cpe.getLanguage();
-    		case swEdition:
-    			return cpe.getSwEdition();
-    		case targetSw:
-    			return cpe.getTargetSw();
-    		case targetHw:
-    			return cpe.getTargetHw();
-    		case other:
-    			return cpe.getOther();
-    	}
-    	throw new IllegalStateException( "Unknown enum value "+this);
-    }
-    
-    public String extractWellFormedSegment( Cpe cpe )
-    {
-    	switch( this ) {
-    		case part:
-    			return cpe.getPart().getAbbreviation();
-    		case vendor:
-    			return cpe.getWellFormedVendor();
-    		case product:
-    			return cpe.getWellFormedProduct();
-    		case version:
-    			return cpe.getWellFormedVersion();
-    		case update:
-    			return cpe.getWellFormedUpdate();
-    		case edition:
-    			return cpe.getWellFormedEdition();
-    		case language:
-    			return cpe.getWellFormedLanguage();
-    		case swEdition:
-    			return cpe.getWellFormedSwEdition();
-    		case targetSw:
-    			return cpe.getWellFormedTargetSw();
-    		case targetHw:
-    			return cpe.getWellFormedTargetHw();
-    		case other:
-    			return cpe.getWellFormedOther();
-    	}
-    	throw new IllegalStateException( "Unknown enum value "+this);
-    }
+	public String description() {
+		return desc;
+	}
+
+	public Property property() {
+		return prop;
+	}
+
+	public String extractSegment(Cpe cpe) {
+		switch (this) {
+		case part:
+			return cpe.getPart().getAbbreviation();
+		case vendor:
+			return cpe.getVendor();
+		case product:
+			return cpe.getProduct();
+		case version:
+			return cpe.getVersion();
+		case update:
+			return cpe.getUpdate();
+		case edition:
+			return cpe.getEdition();
+		case language:
+			return cpe.getLanguage();
+		case swEdition:
+			return cpe.getSwEdition();
+		case targetSw:
+			return cpe.getTargetSw();
+		case targetHw:
+			return cpe.getTargetHw();
+		case other:
+			return cpe.getOther();
+		}
+		throw new IllegalStateException("Unknown enum value " + this);
+	}
+
+	public String extractWellFormedSegment(Cpe cpe) {
+		switch (this) {
+		case part:
+			return cpe.getPart().getAbbreviation();
+		case vendor:
+			return cpe.getWellFormedVendor();
+		case product:
+			return cpe.getWellFormedProduct();
+		case version:
+			return cpe.getWellFormedVersion();
+		case update:
+			return cpe.getWellFormedUpdate();
+		case edition:
+			return cpe.getWellFormedEdition();
+		case language:
+			return cpe.getWellFormedLanguage();
+		case swEdition:
+			return cpe.getWellFormedSwEdition();
+		case targetSw:
+			return cpe.getWellFormedTargetSw();
+		case targetHw:
+			return cpe.getWellFormedTargetHw();
+		case other:
+			return cpe.getWellFormedOther();
+		}
+		throw new IllegalStateException("Unknown enum value " + this);
+	}
 
 }

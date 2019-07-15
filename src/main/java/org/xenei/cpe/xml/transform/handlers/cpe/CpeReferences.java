@@ -15,6 +15,7 @@ public class CpeReferences extends CPEHandlerBase {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param item the CPE Item the references are associated with.
 	 */
 	public CpeReferences(CpeItem item) {

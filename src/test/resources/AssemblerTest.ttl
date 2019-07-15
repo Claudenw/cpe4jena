@@ -1,0 +1,36 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix ja:         <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix cpe:		<http://xenei.org/cpe/rdf/reasoner#> .
+@prefix my:         <http://xenei.org/cpe/rdf/reasoner/test#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+
+<>	ja:loadClass	"org.xenei.cpe.rdf.reasoner.ReasonedDatasetAssembler" .
+
+cpe:Dataset 
+	rdfs:subClassOf ja:Dataset ;
+	 .
+
+my:dataset 
+	a cpe:Dataset;
+	rdfs:label "Reasoned dataset" ;
+	cpe:dataset my:otherDataset ;
+	.
+
+#my:otherDataset rdf:type      tdb:DatasetTDB ;
+#    tdb:location "/temp/DB" ;
+#    # Query timeout on this dataset (1s, 1000 milliseconds)
+#    ja:context [ ja:cxtName "arq:queryTimeout" ;  ja:cxtValue "1000" ] ;
+#    # Make the default graph be the union of all named graphs.
+#    ## tdb:unionDefaultGraph true ;
+#     .		
+
+my:otherDataset    rdf:type ja:RDFDataset ;
+    rdfs:label "Books" ;    
+    .
+
+        
+    
+    

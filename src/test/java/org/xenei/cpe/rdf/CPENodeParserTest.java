@@ -30,51 +30,51 @@ import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.values.Part;
 
 public class CPENodeParserTest {
-	
+
 	private MyFunction func = new MyFunction();
 	private static final String URN = "cpe:2.3:h:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
-	
-	private void verifyCpe( Cpe cpe )
-	{
-		assertEquals( Part.HARDWARE_DEVICE, cpe.getPart());
-		assertEquals( "vendor", cpe.getVendor());
-		assertEquals( "product", cpe.getProduct());
-		assertEquals( "version", cpe.getVersion());
-		assertEquals( "update", cpe.getUpdate());
-		assertEquals( "edition", cpe.getEdition());
-		assertEquals( "language", cpe.getLanguage());
-		assertEquals( "swEdition", cpe.getSwEdition());
-		assertEquals( "targetSw", cpe.getTargetSw());
-		assertEquals( "targetHw", cpe.getTargetHw());
-		assertEquals( "other", cpe.getOther());
+
+	private void verifyCpe(Cpe cpe) {
+		assertEquals(Part.HARDWARE_DEVICE, cpe.getPart());
+		assertEquals("vendor", cpe.getVendor());
+		assertEquals("product", cpe.getProduct());
+		assertEquals("version", cpe.getVersion());
+		assertEquals("update", cpe.getUpdate());
+		assertEquals("edition", cpe.getEdition());
+		assertEquals("language", cpe.getLanguage());
+		assertEquals("swEdition", cpe.getSwEdition());
+		assertEquals("targetSw", cpe.getTargetSw());
+		assertEquals("targetHw", cpe.getTargetHw());
+		assertEquals("other", cpe.getOther());
 
 	}
+
 	@Test
 	public void parseStringTest() {
 		NodeValue nv = NodeValue.makeString(URN);
-		verifyCpe( CPENodeParser.parse( func, nv ) );
+		verifyCpe(CPENodeParser.parse(func, nv));
 	}
 
 	@Test
 	public void parseLiteralTest() {
-		RDFDatatype dtype = TypeMapper.getInstance().getTypeByName( CPEDatatype.URI ); 
-		NodeValue nv = NodeValue.makeNode(URN, dtype );
-		verifyCpe( CPENodeParser.parse( func, nv ) );
+		RDFDatatype dtype = TypeMapper.getInstance().getTypeByName(CPEDatatype.URI);
+		NodeValue nv = NodeValue.makeNode(URN, dtype);
+		verifyCpe(CPENodeParser.parse(func, nv));
 	}
 
 	@Test
 	public void parseNodeTest() {
-		NodeValue nv = NodeValue.makeNode( NodeFactory.createURI(URN));
-		verifyCpe( CPENodeParser.parse( func, nv ) );
+		NodeValue nv = NodeValue.makeNode(NodeFactory.createURI(URN));
+		verifyCpe(CPENodeParser.parse(func, nv));
 	}
-	
+
 	private class MyFunction extends FunctionBase0 {
 
 		@Override
 		public NodeValue exec() {
-			return NodeValue.makeString( "MyFunction" );
+			return NodeValue.makeString("MyFunction");
 		}
-		
+
 	}
 
 }

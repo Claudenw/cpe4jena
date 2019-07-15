@@ -17,7 +17,7 @@ public class CpeNotes extends CPEHandlerBase {
 	/**
 	 * Constructor.
 	 * 
-	 * @param item The CpeItem this notes list is associated with.
+	 * @param item       The CpeItem this notes list is associated with.
 	 * @param attributes the attributes for this notes list.
 	 */
 	public CpeNotes(CpeItem item, Attributes attributes) {

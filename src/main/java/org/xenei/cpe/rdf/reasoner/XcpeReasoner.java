@@ -19,21 +19,27 @@ import org.xenei.cpe.rdf.vocabulary.XCPE;
  */
 public class XcpeReasoner {
 
-	public static InfModel createInfModel( Model data )
-	{
-		Model schema = ModelFactory.createUnion( CPE.getSchema(), CPE23.getSchema());
-		schema = ModelFactory.createUnion( schema, XCPE.getSchema());
-		GenericRuleReasoner ruleReasoner = new GenericRuleReasoner( getRules() );
-		ruleReasoner.setOWLTranslation(true);
-		ruleReasoner.setTransitiveClosureCaching(true);
-		ruleReasoner.setMode( GenericRuleReasoner.HYBRID);
+	private static Reasoner reasoner;
 
-		Reasoner boundReasoner = ruleReasoner.bindSchema( schema );
-		return ModelFactory.createInfModel( boundReasoner, data );
+	public static InfModel createInfModel(Model data) {
+		return ModelFactory.createInfModel(getReasoner(), data);
 	}
-	
+
 	private static List<Rule> getRules() {
 		URL rules = XcpeReasoner.class.getResource("./XCPE.rules");
-		return Rule.rulesFromURL( rules.toExternalForm() );
+		return Rule.rulesFromURL(rules.toExternalForm());
+	}
+
+	private synchronized static Reasoner getReasoner() {
+		if (reasoner == null) {
+			Model schema = ModelFactory.createUnion(CPE.getSchema(), CPE23.getSchema());
+			schema = ModelFactory.createUnion(schema, XCPE.getSchema());
+			GenericRuleReasoner ruleReasoner = new GenericRuleReasoner(getRules());
+			ruleReasoner.setOWLTranslation(true);
+			ruleReasoner.setTransitiveClosureCaching(true);
+			ruleReasoner.setMode(GenericRuleReasoner.HYBRID);
+			reasoner = ruleReasoner.bindSchema(schema);
+		}
+		return reasoner;
 	}
 }

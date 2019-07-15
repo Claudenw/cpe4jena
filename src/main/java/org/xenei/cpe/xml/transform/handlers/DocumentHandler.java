@@ -13,6 +13,7 @@ public class DocumentHandler extends CPEHandlerBase {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param cpeHandler the CPE handler that has received the start document event.
 	 */
 	public DocumentHandler(CPEHandler cpeHandler) {
@@ -21,25 +22,22 @@ public class DocumentHandler extends CPEHandlerBase {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		String fqName = uri+localName;
-		if (fqName.equals( CpeList.ELEMENT ))
-		{
-			push( new CpeList( this, attributes ));
+		String fqName = uri + localName;
+		if (fqName.equals(CpeList.ELEMENT)) {
+			push(new CpeList(this, attributes));
 		} else {
-			super.startElement( uri, localName, qName, attributes);
+			super.startElement(uri, localName, qName, attributes);
 		}
 	}
-	
+
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		throw new SAXException( "Unexpected end Element "+uri+localName);
+		throw new SAXException("Unexpected end Element " + uri + localName);
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
 		pop();
 	}
-
-	
 
 }

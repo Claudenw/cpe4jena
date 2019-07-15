@@ -26,24 +26,21 @@ import us.springett.parsers.cpe.exceptions.CpeParsingException;
 import us.springett.parsers.cpe.values.Part;
 
 public class CPEFactoryTest {
-	
+
 	private static final String URN = "cpe:2.3:h:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
-	
+
 	@Test
 	public void getResourceTest() throws CpeParsingException {
-		
+
 		Resource result = CPEFactory.buildResource(URN);
-		for (CPESegment segment : CPESegment.values())
-		{
-			
-			if (segment == CPESegment.part)
-			{				
-				assertEquals( Part.HARDWARE_DEVICE, result.getProperty( segment.property() ).getLiteral().getValue());
-				assertEquals( Part.HARDWARE_DEVICE.name(), result.getProperty( segment.property() ).getString());
-				
-			}
-			else {
-				assertEquals( segment.name(), result.getProperty( segment.property() ).getString());
+		for (CPESegment segment : CPESegment.values()) {
+
+			if (segment == CPESegment.part) {
+				assertEquals(Part.HARDWARE_DEVICE, result.getProperty(segment.property()).getLiteral().getValue());
+				assertEquals(Part.HARDWARE_DEVICE.name(), result.getProperty(segment.property()).getString());
+
+			} else {
+				assertEquals(segment.name(), result.getProperty(segment.property()).getString());
 			}
 		}
 	}

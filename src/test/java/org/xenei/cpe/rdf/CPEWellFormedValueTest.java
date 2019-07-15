@@ -26,46 +26,39 @@ import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.sparql.expr.NodeValue;
 import org.junit.Test;
 
-
 public class CPEWellFormedValueTest {
-	private static RDFDatatype dtype = TypeMapper.getInstance().getTypeByName( CPEDatatype.URI );
+	private static RDFDatatype dtype = TypeMapper.getInstance().getTypeByName(CPEDatatype.URI);
 	private static final String URN = "cpe:2.3:h:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
 	private static CPEWellFormedValue cpeValue = new CPEWellFormedValue();
 
-	
-	
 	@Test
 	public void execURI() {
-		NodeValue cpeURI = NodeValue.makeNode( NodeFactory.createURI(URN));
-		for (CPESegment segment : CPESegment.values())
-		{
-			NodeValue seg = NodeValue.makeString( segment.name() );
-			
-			NodeValue nv = cpeValue.exec( cpeURI, seg );
-			assertTrue( nv.isLiteral() );
-			if (segment == CPESegment.part )
-			{
-				assertEquals( "h", nv.getString());
+		NodeValue cpeURI = NodeValue.makeNode(NodeFactory.createURI(URN));
+		for (CPESegment segment : CPESegment.values()) {
+			NodeValue seg = NodeValue.makeString(segment.name());
+
+			NodeValue nv = cpeValue.exec(cpeURI, seg);
+			assertTrue(nv.isLiteral());
+			if (segment == CPESegment.part) {
+				assertEquals("h", nv.getString());
 			} else {
-				assertEquals( segment.name(), nv.getString());
+				assertEquals(segment.name(), nv.getString());
 			}
 		}
 	}
 
 	@Test
 	public void execLiteral() {
-		NodeValue cpeLiteral = NodeValue.makeNode(URN, dtype );
-		for (CPESegment segment : CPESegment.values())
-		{
-			NodeValue seg = NodeValue.makeString( segment.name() );
-			
-			NodeValue nv = cpeValue.exec( cpeLiteral, seg );
-			assertTrue( nv.isLiteral() );
-			if (segment == CPESegment.part )
-			{
-				assertEquals( "h", nv.getString());
+		NodeValue cpeLiteral = NodeValue.makeNode(URN, dtype);
+		for (CPESegment segment : CPESegment.values()) {
+			NodeValue seg = NodeValue.makeString(segment.name());
+
+			NodeValue nv = cpeValue.exec(cpeLiteral, seg);
+			assertTrue(nv.isLiteral());
+			if (segment == CPESegment.part) {
+				assertEquals("h", nv.getString());
 			} else {
-				assertEquals( segment.name(), nv.getString());
+				assertEquals(segment.name(), nv.getString());
 			}
 		}
 	}

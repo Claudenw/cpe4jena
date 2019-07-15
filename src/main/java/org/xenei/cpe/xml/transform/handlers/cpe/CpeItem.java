@@ -11,20 +11,20 @@ import org.xenei.cpe.xml.transform.handlers.cpe23.Cpe23Item;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-
 /**
  * A CpeItem.
  *
  */
 public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 
-	public static final String ELEMENT = CPE.uri+"cpe-item";
+	public static final String ELEMENT = CPE.uri + "cpe-item";
 
 	private Resource subject;
 
 	/**
 	 * Constructor.
-	 * @param cpeList  The CpeList this is enclosed by
+	 * 
+	 * @param cpeList    The CpeList this is enclosed by
 	 * @param attributes the attributes for this item.
 	 * @throws SAXException on missing attributes.
 	 */
@@ -34,18 +34,17 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 		if (name == null) {
 			throw new SAXException(CpeItem.ELEMENT + " must have name attribute");
 		}
-			
-		subject = addCPE( name );
-		
+
+		subject = addCPE(name);
+
 		addTriple(subject, RDF.type, CPE.ItemType);
 
-		addOptionalAttribute( subject, attributes, "deprecated", CPE.deprecated );
-		addOptionalAttribute( subject, attributes, "deprecation_date", CPE.deprecationDate);
-		
-		String deprecatedBy = attributes.getValue( "deprecated_by" );
-		if (deprecatedBy != null)
-		{
-			addTriple( subject, CPE.deprecatedBy, addCPE( deprecatedBy ));
+		addOptionalAttribute(subject, attributes, "deprecated", CPE.deprecated);
+		addOptionalAttribute(subject, attributes, "deprecation_date", CPE.deprecationDate);
+
+		String deprecatedBy = attributes.getValue("deprecated_by");
+		if (deprecatedBy != null) {
+			addTriple(subject, CPE.deprecatedBy, addCPE(deprecatedBy));
 		}
 	}
 
@@ -70,10 +69,9 @@ public class CpeItem extends CPEHandlerBase implements SubjectHandler {
 
 		if (fqName.equals(CPE.references.getURI())) {
 			push(new CpeReferences(this));
-		}
-		else if (fqName.equals(CPE23.cpe23Item.getURI())) {
+		} else if (fqName.equals(CPE23.cpe23Item.getURI())) {
 			push(new Cpe23Item(this, attributes));
-		} else if (fqName.equals(CPE.uri+"notes")) {
+		} else if (fqName.equals(CPE.uri + "notes")) {
 			push(new CpeNotes(this, attributes));
 		} else if (fqName.equals(CPE.check.getURI())) {
 			push(new CpeCheck(this, attributes));

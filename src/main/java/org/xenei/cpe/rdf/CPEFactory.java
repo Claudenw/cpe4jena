@@ -34,40 +34,41 @@ import us.springett.parsers.cpe.exceptions.CpeParsingException;
  *
  */
 public class CPEFactory {
-	
+
 	/**
-	 * Build an RDF resource with model that contains all the properties defined in the URN.
+	 * Build an RDF resource with model that contains all the properties defined in
+	 * the URN.
 	 * 
 	 * For a simple resource without model use asResource()
+	 * 
 	 * @param cpeURN the URN to create a resource with model from.
 	 * @return the Resource with model
 	 * @throws CpeParsingException if the URN is not a valid CPE.
 	 */
-	public static Resource buildResource( String cpeURN ) throws CpeParsingException
-	{
-		return buildResource( CpeParser.parse( cpeURN ) );
+	public static Resource buildResource(String cpeURN) throws CpeParsingException {
+		return buildResource(CpeParser.parse(cpeURN));
 	}
-	
+
 	/**
-	 * Build an RDF resource with model that contains all the properties defined in the Cpe.
+	 * Build an RDF resource with model that contains all the properties defined in
+	 * the Cpe.
 	 * 
 	 * For a simple resource without a model use asResource()
+	 * 
 	 * @param cpe the CPE to process.
 	 * @return the RDF Resource with model.
 	 */
-	public static Resource buildResource( Cpe cpe ) {
+	public static Resource buildResource(Cpe cpe) {
 		Model model = ModelFactory.createDefaultModel();
-		Resource result = model.createResource( cpe.toString(), XCPE.Item );		
-		for (CPESegment segment : CPESegment.values())
-		{
-			model.add( segment.property(), DC_11.description,  segment.description() );
-			if (segment == CPESegment.part)
-			{
-				result.addLiteral( segment.property(), cpe.getPart() );
+		Resource result = model.createResource(cpe.toString(), XCPE.Item);
+		for (CPESegment segment : CPESegment.values()) {
+			model.add(segment.property(), DC_11.description, segment.description());
+			if (segment == CPESegment.part) {
+				result.addLiteral(segment.property(), cpe.getPart());
 			} else {
 				String value = segment.extractSegment(cpe);
 				if (StringUtils.isNotBlank(value)) {
-					result.addLiteral( segment.property(), value);
+					result.addLiteral(segment.property(), value);
 				}
 			}
 		}
@@ -78,35 +79,36 @@ public class CPEFactory {
 	 * Build an RDF resource without a model
 	 * 
 	 * For an RDF resource with a model use buildResource()
+	 * 
 	 * @param cpeURN the URN to create a resource with model from.
 	 * @return the Resource without a model.
 	 * @throws CpeParsingException if the URN is not a valid CPE.
 	 */
-	public static Resource asResource(String cpeURN )  throws CpeParsingException
-    {
-		return asResource( CpeParser.parse( cpeURN ) );
-    }
-	
+	public static Resource asResource(String cpeURN) throws CpeParsingException {
+		return asResource(CpeParser.parse(cpeURN));
+	}
+
 	/**
 	 * Build an RDF resource without a model.
 	 * 
 	 * For an RDF resource with a model use buildResource()
+	 * 
 	 * @param cpe the CPE to process.
 	 * @return the RDF Resource with model.
 	 */
-	public static Resource asResource(Cpe cpe )  throws CpeParsingException
-    {
-		return ResourceFactory.createResource( cpe.toString() );
-    }
+	public static Resource asResource(Cpe cpe) throws CpeParsingException {
+		return ResourceFactory.createResource(cpe.toString());
+	}
 
 	/**
 	 * Create a model that contains all the schema information for the CPE schema.
+	 * 
 	 * @return a model containing the CPE schema statements.
 	 */
 	public static Model getSchema() {
 		Model model = ModelFactory.createDefaultModel();
-		model.add( XCPE.getSchema() );
+		model.add(XCPE.getSchema());
 		return model;
 	}
-	
+
 }

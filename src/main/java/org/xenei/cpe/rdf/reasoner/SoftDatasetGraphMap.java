@@ -1,0 +1,254 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.xenei.cpe.rdf.reasoner;
+
+import static org.apache.jena.sparql.util.graph.GraphUtils.triples2quads;
+import static org.apache.jena.sparql.util.graph.GraphUtils.triples2quadsDftGraph;
+
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.jena.atlas.iterator.IteratorConcat;
+import org.apache.jena.graph.Graph;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.query.TxnType;
+import org.apache.jena.sparql.ARQException;
+import org.apache.jena.sparql.core.DatasetGraphFactory;
+import org.apache.jena.sparql.core.DatasetGraphFactory.GraphMaker;
+import org.apache.jena.sparql.core.DatasetGraphTriplesQuads;
+import org.apache.jena.sparql.core.Quad;
+import org.apache.jena.sparql.core.Transactional;
+import org.apache.jena.sparql.core.TransactionalLock;
+import org.apache.jena.sparql.graph.GraphUnionRead;
+
+/**
+ * Implementation of a {@code DatasetGraph} as an extensible set of graphs.
+ * Subclasses need to manage any implicit graph creation.
+ * <p>
+ * This implementation provides copy-in, copy-out for {@link #addGraph}.
+ * <p>
+ * See {@link DatasetGraphMapLink} for a {@code DatasetGraph} that holds graphs
+ * as provided.
+ * 
+ * References to graphs are held in soft links. Disposed graphs will be
+ * recreated by calls to the GraphMaker.
+ * 
+ * @see DatasetGraphMap
+ */
+public class SoftDatasetGraphMap extends DatasetGraphTriplesQuads {
+	private final GraphMaker graphMaker;
+	private final Map<Node, SoftReference<Graph>> graphs = new HashMap<>();
+	private Graph defaultGraph;
+
+	/**
+	 * DatasetGraphMap defaulting to storage in memory.
+	 */
+	public SoftDatasetGraphMap() {
+		this(DatasetGraphFactory.graphMakerNamedGraphMem);
+	}
+
+	/**
+	 * DatasetGraphMap with a specific policy for graph creation. This allows
+	 * control over the storage.
+	 */
+	public SoftDatasetGraphMap(GraphMaker graphMaker) {
+		this(graphMaker.create(null), graphMaker);
+	}
+
+	private SoftDatasetGraphMap(Graph defaultGraph, GraphMaker graphMaker) {
+		this.defaultGraph = defaultGraph;
+		this.graphMaker = graphMaker;
+	}
+
+	// ----
+	private final Transactional txn = TransactionalLock.createMRSW();
+
+	@Override
+	public void begin() {
+		txn.begin();
+	}
+
+	@Override
+	public void begin(TxnType txnType) {
+		txn.begin(txnType);
+	}
+
+	@Override
+	public void begin(ReadWrite mode) {
+		txn.begin(mode);
+	}
+
+	@Override
+	public boolean promote(Promote txnType) {
+		return txn.promote(txnType);
+	}
+
+	@Override
+	public void commit() {
+		txn.commit();
+	}
+
+	@Override
+	public void abort() {
+		txn.abort();
+	}
+
+	@Override
+	public boolean isInTransaction() {
+		return txn.isInTransaction();
+	}
+
+	@Override
+	public void end() {
+		txn.end();
+	}
+
+	@Override
+	public ReadWrite transactionMode() {
+		return txn.transactionMode();
+	}
+
+	@Override
+	public TxnType transactionType() {
+		return txn.transactionType();
+	}
+
+	@Override
+	public boolean supportsTransactions() {
+		return true;
+	}
+
+	@Override
+	public boolean supportsTransactionAbort() {
+		return false;
+	}
+	// ----
+
+	@Override
+	public Iterator<Node> listGraphNodes() {
+		// Hide empty graphs.
+		return graphs.entrySet().stream().filter(e -> !(e.getValue().get() == null || e.getValue().get().isEmpty()))
+				.map(Entry::getKey).iterator();
+	}
+
+	@Override
+	public boolean containsGraph(Node graphNode) {
+		// Hide empty graphs.
+		if (Quad.isDefaultGraph(graphNode))
+			return true;
+		if (Quad.isUnionGraph(graphNode))
+			return true;
+		Graph g = getSoftGraph(graphNode);
+		return g != null && !g.isEmpty();
+	}
+
+	@Override
+	protected void addToDftGraph(Node s, Node p, Node o) {
+		getDefaultGraph().add(Triple.create(s, p, o));
+	}
+
+	@Override
+	protected void addToNamedGraph(Node g, Node s, Node p, Node o) {
+		getGraph(g).add(Triple.create(s, p, o));
+	}
+
+	@Override
+	protected void deleteFromDftGraph(Node s, Node p, Node o) {
+		getDefaultGraph().delete(Triple.create(s, p, o));
+	}
+
+	@Override
+	protected void deleteFromNamedGraph(Node g, Node s, Node p, Node o) {
+		getGraph(g).delete(Triple.create(s, p, o));
+	}
+
+	@Override
+	protected Iterator<Quad> findInDftGraph(Node s, Node p, Node o) {
+		Iterator<Triple> iter = getDefaultGraph().find(s, p, o);
+		return triples2quadsDftGraph(iter);
+	}
+
+	@Override
+	protected Iterator<Quad> findInSpecificNamedGraph(Node g, Node s, Node p, Node o) {
+		Iterator<Triple> iter = getGraph(g).find(s, p, o);
+		return triples2quads(g, iter);
+	}
+
+	@Override
+	protected Iterator<Quad> findInAnyNamedGraphs(Node s, Node p, Node o) {
+		Iterator<Node> gnames = listGraphNodes();
+		IteratorConcat<Quad> iter = new IteratorConcat<>();
+
+		// Named graphs
+		for (; gnames.hasNext();) {
+			Node gn = gnames.next();
+			Iterator<Quad> qIter = findInSpecificNamedGraph(gn, s, p, o);
+			if (qIter != null)
+				iter.add(qIter);
+		}
+		return iter;
+	}
+
+	@Override
+	public Graph getDefaultGraph() {
+		return defaultGraph;
+	}
+
+	private Graph getSoftGraph(Node graphNode) {
+		SoftReference<Graph> sr = graphs.get(graphNode);
+		return sr == null ? null : sr.get();
+	}
+
+	@Override
+	public Graph getGraph(Node graphNode) {
+		if (Quad.isUnionGraph(graphNode))
+			return new GraphUnionRead(this);
+		if (Quad.isDefaultGraph(graphNode))
+			return getDefaultGraph();
+		// Not a special case.
+		Graph g = getSoftGraph(graphNode);
+		if (g == null) {
+			g = getGraphCreate(graphNode);
+			if (g != null)
+				graphs.put(graphNode, new SoftReference<Graph>(g));
+		}
+		return g;
+	}
+
+	/**
+	 * Called from getGraph when a nonexistent graph is asked for. Return null for
+	 * "nothing created as a graph". Sub classes can reimplement this.
+	 */
+	protected Graph getGraphCreate(Node graphNode) {
+		Graph g = graphMaker.create(graphNode);
+		if (g == null)
+			throw new ARQException("Can't make new graphs");
+		return g;
+	}
+
+	@Override
+	public long size() {
+		return graphs.size();
+	}
+}

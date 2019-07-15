@@ -23,17 +23,17 @@ public class CpeCheck extends CPEHandlerBase {
 	/**
 	 * Constructor.
 	 * 
-	 * @param item The CpeItem this notes list is associated with.
+	 * @param item       The CpeItem this notes list is associated with.
 	 * @param attributes the attributes for this notes list.
-	 * @throws SAXException 
+	 * @throws SAXException
 	 */
 	public CpeCheck(CpeItem item, Attributes attributes) throws SAXException {
 		super(item);
-		subject = ResourceFactory.createResource( "url:uuid:"+UUID.randomUUID().toString());
-		item.addTriple( CPE.check, subject);
-		addTriple( subject, RDF.type, CPE.ChecktypeType );
-		addRequiredURLAttribute( subject, attributes, "system", CPE.system );
-		addOptionalURLAttribute( subject, attributes, "href", CPE.href );
+		subject = ResourceFactory.createResource("url:uuid:" + UUID.randomUUID().toString());
+		item.addTriple(CPE.check, subject);
+		addTriple(subject, RDF.type, CPE.ChecktypeType);
+		addRequiredURLAttribute(subject, attributes, "system", CPE.system);
+		addOptionalURLAttribute(subject, attributes, "href", CPE.href);
 		sb = new StringBuilder();
 	}
 
@@ -41,12 +41,12 @@ public class CpeCheck extends CPEHandlerBase {
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		sb.append(ch, start, length);
 	}
-	
+
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
 		if (fqName.equals(CPE.check.getURI())) {
-			addTriple( subject, XCPE.checkText, sb.toString() );
+			addTriple(subject, XCPE.checkText, sb.toString());
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

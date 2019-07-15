@@ -23,15 +23,16 @@ public class CpeReference extends CPEHandlerBase {
 
 	/**
 	 * Constructor.
-	 * @param item the CPE Item this reference is associated with.
+	 * 
+	 * @param item       the CPE Item this reference is associated with.
 	 * @param attributes the attributes for this reference.
 	 * @throws SAXException if the reference does not have an "href" attribute.
 	 */
 	public CpeReference(CpeItem item, Attributes attributes) throws SAXException {
 		super(item);
-		subject = ResourceFactory.createResource( "urn:uuid:"+UUID.randomUUID().toString());
-		addTriple( subject, RDF.type, CPE.ReferenceType);
-		item.addTriple( CPE.references, subject);
+		subject = ResourceFactory.createResource("urn:uuid:" + UUID.randomUUID().toString());
+		addTriple(subject, RDF.type, CPE.ReferenceType);
+		item.addTriple(CPE.references, subject);
 
 		String href = attributes.getValue("href");
 		if (href == null) {

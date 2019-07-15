@@ -47,7 +47,7 @@ public class CPETransformerTest {
 			rs.forEachRemaining(qs -> System.out.println(qs));
 		}
 	}
-	
+
 	@Test
 	public void fusekiTest() throws IOException, TransformerException, ParserConfigurationException, SAXException {
 
@@ -68,7 +68,7 @@ public class CPETransformerTest {
 
 		stream.finish();
 		System.out.println(stream.count());
-		//System.out.println(ds.asDatasetGraph().getDefaultGraph().size());
+		// System.out.println(ds.asDatasetGraph().getDefaultGraph().size());
 
 		SelectBuilder sb = new SelectBuilder().addVar("?p").setDistinct(true).addWhere("?s", "?p", "?o");
 		try (QueryExecution qe = conn.query(sb.build());) {

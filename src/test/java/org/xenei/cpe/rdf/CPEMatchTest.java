@@ -31,42 +31,41 @@ public class CPEMatchTest {
 	private static final String URN2 = "cpe:2.3:a:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
 	private static final String URNWild = "cpe:2.3:*:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
 	private static CPEMatch cpeMatch = new CPEMatch();
-	
+
 	public CPEMatchTest() throws CpeParsingException {
-	
+
 	}
-	
-	
+
 	@Test
 	public void matchSameTest() {
-		NodeValue cpe1Node = NodeValue.makeNode( NodeFactory.createURI(URN));
-		NodeValue cpe2Node = NodeValue.makeNode( NodeFactory.createURI(URN));
+		NodeValue cpe1Node = NodeValue.makeNode(NodeFactory.createURI(URN));
+		NodeValue cpe2Node = NodeValue.makeNode(NodeFactory.createURI(URN));
 		NodeValue result = cpeMatch.exec(cpe1Node, cpe2Node);
-		assertTrue( result.getBoolean() );
-	}		
+		assertTrue(result.getBoolean());
+	}
 
 	@Test
 	public void matchDifferentTest() {
-		NodeValue cpe1Node = NodeValue.makeNode( NodeFactory.createURI(URN));
-		NodeValue cpe2Node = NodeValue.makeNode( NodeFactory.createURI(URN2));
+		NodeValue cpe1Node = NodeValue.makeNode(NodeFactory.createURI(URN));
+		NodeValue cpe2Node = NodeValue.makeNode(NodeFactory.createURI(URN2));
 		NodeValue result = cpeMatch.exec(cpe1Node, cpe2Node);
-		assertFalse( result.getBoolean() );
-	}		
+		assertFalse(result.getBoolean());
+	}
 
 	@Test
 	public void matchRightWildcardTest() {
-		NodeValue cpe1Node = NodeValue.makeNode( NodeFactory.createURI(URN));
-		NodeValue cpe2Node = NodeValue.makeNode( NodeFactory.createURI(URNWild));
+		NodeValue cpe1Node = NodeValue.makeNode(NodeFactory.createURI(URN));
+		NodeValue cpe2Node = NodeValue.makeNode(NodeFactory.createURI(URNWild));
 		NodeValue result = cpeMatch.exec(cpe1Node, cpe2Node);
-		assertFalse( result.getBoolean() );
-	}		
+		assertFalse(result.getBoolean());
+	}
 
 	@Test
 	public void matchLeftWildcardTest() {
-		NodeValue cpe1Node = NodeValue.makeNode( NodeFactory.createURI(URNWild));
-		NodeValue cpe2Node = NodeValue.makeNode( NodeFactory.createURI(URN));
+		NodeValue cpe1Node = NodeValue.makeNode(NodeFactory.createURI(URNWild));
+		NodeValue cpe2Node = NodeValue.makeNode(NodeFactory.createURI(URN));
 		NodeValue result = cpeMatch.exec(cpe1Node, cpe2Node);
-		assertTrue( result.getBoolean() );
-	}		
+		assertTrue(result.getBoolean());
+	}
 
 }

@@ -27,35 +27,31 @@ import us.springett.parsers.cpe.exceptions.CpeParsingException;
 public class CPESegmentTest {
 
 	private static final String URN = "cpe:2.3:h:vendor:product:version:update:edition:language:swEdition:targetSw:targetHw:other";
-	
+
 	@Test
 	public void extractSegmentTest() throws CpeParsingException {
-		Cpe cpe = CpeParser.parse( URN );
-		
-		for (CPESegment segment : CPESegment.values())
-		{
+		Cpe cpe = CpeParser.parse(URN);
+
+		for (CPESegment segment : CPESegment.values()) {
 			String value = segment.extractSegment(cpe);
-			if (segment == CPESegment.part )
-			{
-				assertEquals( "h", value);
+			if (segment == CPESegment.part) {
+				assertEquals("h", value);
 			} else {
-				assertEquals( segment.name(), value);
+				assertEquals(segment.name(), value);
 			}
 		}
 	}
-	
+
 	@Test
 	public void extractWellFormedSegmentTest() throws CpeParsingException {
-		Cpe cpe = CpeParser.parse( URN );
-		
-		for (CPESegment segment : CPESegment.values())
-		{
+		Cpe cpe = CpeParser.parse(URN);
+
+		for (CPESegment segment : CPESegment.values()) {
 			String value = segment.extractWellFormedSegment(cpe);
-			if (segment == CPESegment.part )
-			{
-				assertEquals( "h", value);
+			if (segment == CPESegment.part) {
+				assertEquals("h", value);
 			} else {
-				assertEquals( segment.name(), value);
+				assertEquals(segment.name(), value);
 			}
 		}
 	}

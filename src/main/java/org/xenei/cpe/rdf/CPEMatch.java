@@ -26,9 +26,9 @@ public class CPEMatch extends FunctionBase2 {
 
 	@Override
 	public NodeValue exec(NodeValue cpe1Node, NodeValue cpe2Node) {
-		
-		Cpe cpe1  = CPENodeParser.parse(this, cpe1Node );
-		Cpe cpe2  = CPENodeParser.parse(this, cpe2Node );
+
+		Cpe cpe1 = CPENodeParser.parse(this, cpe1Node);
+		Cpe cpe2 = CPENodeParser.parse(this, cpe2Node);
 
 		return NodeValue.makeBoolean(cpe1.matches(cpe2));
 	}

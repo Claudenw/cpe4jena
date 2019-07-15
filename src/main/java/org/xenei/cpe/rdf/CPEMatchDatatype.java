@@ -28,70 +28,63 @@ import us.springett.parsers.cpe.Cpe;
 import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
-
 public class CPEMatchDatatype extends AdhocDatatype {
-	
+
 	public static final String URI = "java:" + Cpe.class.getName();
-    public static final RDFDatatype cpeMatchDatatype = new CPEMatchDatatype();
+	public static final RDFDatatype cpeMatchDatatype = new CPEMatchDatatype();
 
+	/* register this data type */
+	static {
+		LoggerFactory.getLogger(CPEMatchDatatype.class)
+				.debug("Registering " + CPEMatchDatatype.class.getCanonicalName());
 
-    /* register this data type */
-    static
-    {
-        LoggerFactory.getLogger( CPEMatchDatatype.class ).debug( "Registering " + CPEMatchDatatype.class
-                .getCanonicalName() );
+		TypeMapper.getInstance().registerDatatype(cpeMatchDatatype);
+	}
 
-        TypeMapper.getInstance().registerDatatype( cpeMatchDatatype );
-    }
+	/**
+	 * Constructor.
+	 */
+	private CPEMatchDatatype() {
+		super(Cpe.class);
+	}
 
-    /**
-     * Constructor.
-     */
-    private CPEMatchDatatype() {
-        super( Cpe.class );
-    }
-    
-    /**
-     * Use byTerm equality.
-     */
-    @Override
-    public boolean isEqual(LiteralLabel litLabel1, LiteralLabel litLabel2) {
-        return isEqualByTerm( litLabel1, litLabel2 );
-    }
-    
-    /**
-     * Parse the lexical form of the value segment into the value segment.
-     *
-     * @param lexicalForm
-     *            the lexical form for the value segment.
-     * @throws DatatypeFormatException
-     *             if lexical is more than one character
-     */
-    @Override
-    public Object parse(final String lexicalForm)  throws DatatypeFormatException {
-        try {
-			return CpeParser.parse( lexicalForm );
+	/**
+	 * Use byTerm equality.
+	 */
+	@Override
+	public boolean isEqual(LiteralLabel litLabel1, LiteralLabel litLabel2) {
+		return isEqualByTerm(litLabel1, litLabel2);
+	}
+
+	/**
+	 * Parse the lexical form of the value segment into the value segment.
+	 *
+	 * @param lexicalForm the lexical form for the value segment.
+	 * @throws DatatypeFormatException if lexical is more than one character
+	 */
+	@Override
+	public Object parse(final String lexicalForm) throws DatatypeFormatException {
+		try {
+			return CpeParser.parse(lexicalForm);
 		} catch (CpeParsingException e) {
 			throw new DatatypeFormatException(lexicalForm, this, e.getMessage());
 		}
-    }
+	}
 
-    /**
-     * Convert a value of this datatype out to lexical form.
-     */
-    @Override
-    public String unparse(final Object value) {
-        if (value instanceof Cpe)
-        {
-        	return ((Cpe)value).toString();
-        }
-        return super.unparse( value );
-    }
+	/**
+	 * Convert a value of this datatype out to lexical form.
+	 */
+	@Override
+	public String unparse(final Object value) {
+		if (value instanceof Cpe) {
+			return ((Cpe) value).toString();
+		}
+		return super.unparse(value);
+	}
 
-    @Override
-    public String toString() {
-        return "Datatype[" + uri + (getJavaClass() == null ? "" : " -> " + getJavaClass()) + "]";
-    }
-
+	@Override
+	public String toString() {
+		return "Datatype[" + uri + (getJavaClass() == null ? "" : " -> " + getJavaClass()) + "]";
+	}
 
 }

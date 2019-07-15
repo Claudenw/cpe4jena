@@ -16,25 +16,26 @@ import org.xml.sax.SAXException;
 /**
  * Class for generator element parsing.
  * 
- * When SubjectHandler.addTriple is called this method also adds the value to the 
- * the graphName() subject in the default graph.
+ * When SubjectHandler.addTriple is called this method also adds the value to
+ * the the graphName() subject in the default graph.
  */
 public class CpeGenerator extends CPEHandlerBase implements SubjectHandler {
 
-	public static final String ELEMENT = CPE.uri+"generator";
+	public static final String ELEMENT = CPE.uri + "generator";
 
 	private Resource subject;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param list the handler for Cpelist that this generator element is contained in. 
+	 * @param list the handler for Cpelist that this generator element is contained
+	 *             in.
 	 */
 	public CpeGenerator(CpeList list) {
 		super(list);
 		subject = ResourceFactory.createResource(source().toExternalForm());
 		addTriple(subject, RDF.type, CPE.Generator);
-		addQuad( Quad.defaultGraphNodeGenerated, subject, RDF.type, CPE.Generator);
+		addQuad(Quad.defaultGraphNodeGenerated, subject, RDF.type, CPE.Generator);
 	}
 
 	@Override
@@ -61,49 +62,44 @@ public class CpeGenerator extends CPEHandlerBase implements SubjectHandler {
 			super.endElement(uri, localName, qName);
 		}
 	}
-	
+
 	private class GeneratorGenericElement extends CPEHandlerBase {
-		
+
 		private GenericElement named;
 		private Property predicate;
 		private Resource subject;
 		private StringBuilder sb;
 		private String lang;
-		
-		
+
 		public GeneratorGenericElement(SubjectHandler subject, String uri, String localName, Attributes attributes) {
-			super( (CPEHandlerBase) subject);
-			named = new GenericElement( subject, uri, localName, attributes);			
+			super((CPEHandlerBase) subject);
+			named = new GenericElement(subject, uri, localName, attributes);
 			this.subject = subject.getSubject();
 			this.sb = new StringBuilder();
 			this.predicate = ResourceFactory.createProperty(uri, localName);
-			this.lang = attributes.getValue( "xml:lang");
+			this.lang = attributes.getValue("xml:lang");
 		}
 
-		
-		
 		@Override
 		public void characters(char[] ch, int start, int length) throws SAXException {
-			sb.append( ch, start, length );
+			sb.append(ch, start, length);
 			named.characters(ch, start, length);
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
-			String fqName = uri+localName;
-			if (predicate.getURI().equals( fqName ))
-			{
-				Literal object = ResourceFactory.createLangLiteral(sb.toString(), lang==null?"":lang);
-				addQuad( Quad.defaultGraphNodeGenerated, subject, predicate, object);
-				/* 
+			String fqName = uri + localName;
+			if (predicate.getURI().equals(fqName)) {
+				Literal object = ResourceFactory.createLangLiteral(sb.toString(), lang == null ? "" : lang);
+				addQuad(Quad.defaultGraphNodeGenerated, subject, predicate, object);
+				/*
 				 * named will pop the stack so push it on
 				 */
-				push( named );				
+				push(named);
 				named.endElement(uri, localName, fqName);
 				pop();
-			}
-			else {
-				super.endElement(uri, localName,  qName );
+			} else {
+				super.endElement(uri, localName, qName);
 			}
 		}
 

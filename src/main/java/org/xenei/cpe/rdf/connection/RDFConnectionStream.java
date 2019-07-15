@@ -1,18 +1,11 @@
 package org.xenei.cpe.rdf.connection;
 
-import java.util.List;
-
-import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
-import org.apache.jena.riot.other.StreamRDFBatchHandler;
 import org.apache.jena.riot.system.StreamRDF;
-import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.Quad;
 
 public class RDFConnectionStream implements StreamRDF {
@@ -22,9 +15,9 @@ public class RDFConnectionStream implements StreamRDF {
 	private final Dataset dataset;
 	private final int bufferSize;
 	private int count;
-	
+
 	public RDFConnectionStream(RDFConnection connection) {
-		this( connection, DEFAULT_BUFFER_SIZE);
+		this(connection, DEFAULT_BUFFER_SIZE);
 	}
 
 	public RDFConnectionStream(RDFConnection connection, int bufferSize) {
@@ -41,7 +34,8 @@ public class RDFConnectionStream implements StreamRDF {
 
 	@Override
 	public void triple(Triple triple) {
-		dataset.asDatasetGraph().add( Quad.defaultGraphNodeGenerated, triple.getSubject(), triple.getPredicate(), triple.getObject());
+		dataset.asDatasetGraph().add(Quad.defaultGraphNodeGenerated, triple.getSubject(), triple.getPredicate(),
+				triple.getObject());
 		checkFlush();
 	}
 
@@ -49,7 +43,7 @@ public class RDFConnectionStream implements StreamRDF {
 	public void quad(Quad quad) {
 		dataset.asDatasetGraph().add(quad);
 		checkFlush();
-		
+
 	}
 
 	@Override
@@ -60,7 +54,7 @@ public class RDFConnectionStream implements StreamRDF {
 	@Override
 	public void prefix(String prefix, String iri) {
 		dataset.getDefaultModel().setNsPrefix(prefix, iri);
-		dataset.listNames().forEachRemaining( name -> dataset.getNamedModel(name).setNsPrefix(prefix, iri));
+		dataset.listNames().forEachRemaining(name -> dataset.getNamedModel(name).setNsPrefix(prefix, iri));
 	}
 
 	@Override
@@ -69,29 +63,25 @@ public class RDFConnectionStream implements StreamRDF {
 	}
 
 	private void checkFlush() {
-		
-		if ( ++count >= bufferSize )
-		{
+
+		if (++count >= bufferSize) {
 			flush();
 		}
-		
+
 	}
-	
+
 	private void flush() {
-		if (count > 0)
-		{
+		if (count > 0) {
 			try {
 				connection.begin(ReadWrite.WRITE);
 				connection.loadDataset(dataset);
 				dataset.asDatasetGraph().clear();
 				count = 0;
-			}
-			finally {
+			} finally {
 				connection.commit();
 			}
 		}
-		
+
 	}
-	
 
 }

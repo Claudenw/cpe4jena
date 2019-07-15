@@ -28,16 +28,15 @@ public class CPEWellFormedValue extends FunctionBase2 {
 
 	@Override
 	public NodeValue exec(NodeValue cpeNode, NodeValue segmentNode) {
-	
-		Cpe cpe  = CPENodeParser.parse(this, cpeNode );
-		
-		if (segmentNode.isLiteral())
-		{
-			CPESegment segment = CPESegment.valueOf( segmentNode.getString() );
-			String result = segment.extractWellFormedSegment( cpe );
-			return NodeValue.makeString( result );
+
+		Cpe cpe = CPENodeParser.parse(this, cpeNode);
+
+		if (segmentNode.isLiteral()) {
+			CPESegment segment = CPESegment.valueOf(segmentNode.getString());
+			String result = segment.extractWellFormedSegment(cpe);
+			return NodeValue.makeString(result);
 		} else {
-			throw new ExprEvalException(Lib.className(this)+": segmentNode not a Literal "+segmentNode.asString());
+			throw new ExprEvalException(Lib.className(this) + ": segmentNode not a Literal " + segmentNode.asString());
 		}
 	}
 

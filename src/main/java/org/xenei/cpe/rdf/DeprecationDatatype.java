@@ -17,7 +17,8 @@ public class DeprecationDatatype extends AdhocDatatype {
 
 	/* register this data type */
 	static {
-		LoggerFactory.getLogger(PartDatatype.class).debug("Registering " + DeprecationDatatype.class.getCanonicalName());
+		LoggerFactory.getLogger(PartDatatype.class)
+				.debug("Registering " + DeprecationDatatype.class.getCanonicalName());
 
 		TypeMapper.getInstance().registerDatatype(deprecationDatatype);
 	}

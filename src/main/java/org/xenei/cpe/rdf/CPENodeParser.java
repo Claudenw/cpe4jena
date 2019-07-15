@@ -28,26 +28,25 @@ import us.springett.parsers.cpe.CpeParser;
 import us.springett.parsers.cpe.exceptions.CpeParsingException;
 
 public class CPENodeParser {
-	
-	public static Cpe parse( Function function, NodeValue cpeNode )
-	{
+
+	public static Cpe parse(Function function, NodeValue cpeNode) {
 		Node n = cpeNode.asNode();
-		if (n.isLiteral())
-		{
+		if (n.isLiteral()) {
 			try {
-				return CpeParser.parse( n.getLiteralLexicalForm() );
+				return CpeParser.parse(n.getLiteralLexicalForm());
 			} catch (CpeParsingException e) {
-				throw new ExprEvalException(Lib.className(function)+": cpeNode not in CPE format "+n.getLiteralLexicalForm());
+				throw new ExprEvalException(
+						Lib.className(function) + ": cpeNode not in CPE format " + n.getLiteralLexicalForm());
 			}
-		} else if (n.isURI())
-		{
+		} else if (n.isURI()) {
 			try {
-				return CpeParser.parse( n.getURI() );
+				return CpeParser.parse(n.getURI());
 			} catch (CpeParsingException e) {
-				throw new ExprEvalException(Lib.className(function)+": cpeNode not in CPE format "+n.getURI());
-			}		
+				throw new ExprEvalException(Lib.className(function) + ": cpeNode not in CPE format " + n.getURI());
+			}
 		} else {
-			throw new ExprEvalException(Lib.className(function)+": cpeNode not a Literal or URI "+cpeNode.asString());
+			throw new ExprEvalException(
+					Lib.className(function) + ": cpeNode not a Literal or URI " + cpeNode.asString());
 		}
 	}
 

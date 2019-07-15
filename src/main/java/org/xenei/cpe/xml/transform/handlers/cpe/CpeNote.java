@@ -18,8 +18,10 @@ public class CpeNote extends CPEHandlerBase {
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param item the Item that this not is associated with.
-	 * @param lang the language tag for this note (may not be null, may be an empty string).
+	 * @param lang the language tag for this note (may not be null, may be an empty
+	 *             string).
 	 */
 	public CpeNote(CpeItem item, String lang) {
 		super(item);

@@ -20,14 +20,15 @@ public class Cpe23EvidenceReference extends CPEHandlerBase {
 
 	/**
 	 * Constructor.
-	 * @param item the CPE Item this reference is associated with.
+	 * 
+	 * @param item       the CPE Item this reference is associated with.
 	 * @param attributes the attributes for this reference.
 	 * @throws SAXException if the reference does not have an "href" attribute.
 	 */
 	public Cpe23EvidenceReference(Cpe23ChangeDescription item, Attributes attributes) throws SAXException {
 		super(item);
 		this.item = item;
-		addRequiredAttribute( item.getSubject(), EvidenceType.class, attributes, "evidence", CPE23.evidence);		
+		addRequiredAttribute(item.getSubject(), EvidenceType.class, attributes, "evidence", CPE23.evidence);
 		sb = new StringBuilder();
 	}
 
@@ -40,9 +41,9 @@ public class Cpe23EvidenceReference extends CPEHandlerBase {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		String fqName = uri + localName;
 		if (CPE23.evidenceReference.getURI().equals(fqName)) {
-			Resource evidence = ResourceFactory.createResource(sb.toString());			
+			Resource evidence = ResourceFactory.createResource(sb.toString());
 			item.addTriple(CPE23.evidenceReference, evidence);
-			addTriple( evidence, RDF.type, CPE23.EvidenceReferenceType);
+			addTriple(evidence, RDF.type, CPE23.EvidenceReferenceType);
 			pop();
 		} else {
 			super.endElement(uri, localName, qName);

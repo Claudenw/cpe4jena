@@ -13,17 +13,18 @@ import org.xml.sax.SAXException;
  *
  */
 public class CpeList extends CPEHandlerBase {
-	
-	public static final String ELEMENT = CPE.uri+"cpe-list";
+
+	public static final String ELEMENT = CPE.uri + "cpe-list";
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param handlerBase the CPEHandlerBase that this list is in.
-	 * @param attributes the attributes for this list.
+	 * @param attributes  the attributes for this list.
 	 */
 	public CpeList(CPEHandlerBase handlerBase, Attributes attributes) {
 		super(handlerBase);
-		addQuad( Quad.defaultGraphNodeGenerated, graphName(), RDF.type, XCPE.CpeGraph );
+		addQuad(Quad.defaultGraphNodeGenerated, graphName(), RDF.type, XCPE.CpeGraph);
 	}
 
 	@Override
