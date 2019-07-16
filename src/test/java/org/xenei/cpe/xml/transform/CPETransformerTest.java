@@ -15,9 +15,11 @@ import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.riot.system.StreamRDFCountingBase;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.xenei.cpe.rdf.connection.RDFConnectionStream;
 import org.xml.sax.SAXException;
 
+@Ignore
 public class CPETransformerTest {
 
 	@Test

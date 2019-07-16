@@ -88,8 +88,8 @@ public class XCPE {
 	public static final RDFDatatype partDatatype = PartDatatype.partDatatype;
 
 	static {
-		URL url = CPE.class.getResource("./XCPE.ttl");
-		model.read(CPE.class.getResourceAsStream("XCPE.ttl"), url.toExternalForm(), "TURTLE");
+		URL url = XCPE.class.getResource( "./XCPE.ttl" );
+		model.read(XCPE.class.getResourceAsStream("./XCPE.ttl"), url.toExternalForm(), "TURTLE");
 	}
 
 }

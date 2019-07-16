@@ -60,7 +60,7 @@ public class CPE23 {
 	public static final Resource EvidenceReferenceType = resource("evidenceReferenceType");
 
 	static {
-		URL url = CPE.class.getResource("./CPE23.ttl");
-		model.read(CPE.class.getResourceAsStream("CPE23.ttl"), url.toExternalForm(), "TURTLE");
+		URL url = CPE23.class.getResource( "./CPE23.ttl" );
+		model.read(CPE23.class.getResourceAsStream( "./CPE23.ttl" ), url.toExternalForm(), "TURTLE");
 	}
 }

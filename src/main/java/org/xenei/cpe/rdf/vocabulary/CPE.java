@@ -56,8 +56,8 @@ public class CPE {
 	public static final Property href = property("href");
 
 	static {
-		URL url = CPE.class.getResource("./CPE.ttl");
-		model.read(CPE.class.getResourceAsStream("CPE.ttl"), url.toExternalForm(), "TURTLE");
+		URL url = CPE.class.getResource( "./CPE.ttl" );
+		model.read(CPE.class.getResourceAsStream( "./CPE.ttl"), url.toExternalForm(), "TURTLE");
 	}
 
 }
